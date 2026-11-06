@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>S&#39;word Master: 워드 디펜스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ===================== 타이틀 ===================== -->
+  <section id="screen-menu" class="screen menu-bg active">
+    <div class="menu-pills"><div class="ticket-pill">🎟️ <span class="ticket-val">0</span></div><div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div></div>
+    <div class="logo">
+      <div class="sub">S'word Master</div>
+      <h1>워드 <span>디펜스</span></h1>
+    </div>
+    <canvas id="menu-hero"></canvas>
+    <div class="menu-buttons">
+      <button class="btn pink big" data-go="stages">출격</button>
+      <button class="btn purple" data-go="gacha" style="position:relative">캐릭터 뽑기<span class="dot" id="gacha-dot" style="display:none">0</span></button>
+      <button class="btn" data-go="shop">편성 · 강화</button>
+      <button class="btn green" data-go="stats">학습 기록</button>
+      <button class="btn blue" data-go="achieve">업적</button>
+      <button class="btn white" data-go="settings">설정</button>
+    </div>
+    <div class="foot-note">영어 단어를 맞히면 몬스터가 출동해요! · 단축키: 1~5 소환, 1~4 정답 선택, Space 일시정지</div>
+  </section>
+
+  <!-- ===================== 스테이지 선택 ===================== -->
+  <section id="screen-stages" class="screen menu-bg">
+    <div class="topbar">
+      <button class="icon-btn" data-go="menu">←</button>
+      <h2>스테이지 선택</h2>
+      <div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div>
+    </div>
+    <div class="content"><div class="panel" id="trait-guide" style="margin-bottom:16px;padding:12px 16px"></div><div class="stage-grid" id="stage-grid"></div></div>
+  </section>
+
+  <!-- ===================== 뽑기 ===================== -->
+  <section id="screen-gacha" class="screen menu-bg">
+    <div class="topbar">
+      <button class="icon-btn" data-go="menu">←</button>
+      <h2>캐릭터 뽑기</h2>
+      <div class="ticket-pill" style="margin-left:auto">🎟️ <span class="ticket-val">0</span></div>
+      <div class="coin-pill" style="margin-left:0"><span class="coin">C</span><span class="coin-val">0</span></div>
+    </div>
+    <div class="content">
+      <div class="gacha-wrap">
+        <div class="panel" style="text-align:center">
+          <canvas id="gacha-machine"></canvas>
+          <div class="gacha-btns">
+            <button class="btn pink" id="g-pull1">🎟️ 1회 뽑기</button>
+            <button class="btn purple" id="g-pull10">🎟️ 10회 뽑기</button>
+          </div>
+          <div class="gacha-btns"><button class="btn white small" id="g-buy">코인으로 뽑기권 사기 · C 250</button></div>
+          <div class="pity" id="g-pity">전설 확정까지 30회</div>
+          <div class="pity-bar"><i id="g-pity-bar" style="width:0"></i></div>
+          <p style="font-size:13px;opacity:.75;margin-top:10px">뽑기권은 스테이지를 클리어하면 받아요 (처음 클리어 3장 · 재도전 1장 · ★3 보너스 1장).<br>이미 가진 캐릭터가 나오면 레벨이 1 올라가요 (최대 레벨이면 코인으로 돌려받아요).</p>
+        </div>
+        <div class="panel">
+          <h3 class="jua" style="font-size:24px;margin-bottom:6px">📜 등급별 확률</h3>
+          <table class="rate-table" id="rate-table"></table>
+          <p style="font-size:13px;opacity:.75;margin-top:10px">등급이 높을수록 소환할 때 자원(⚡)이 많이 들지만 성능은 확실해요!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 상점 ===================== -->
+  <section id="screen-shop" class="screen menu-bg">
+    <div class="topbar">
+      <button class="icon-btn" data-go="menu">←</button>
+      <h2>상점 · 강화</h2>
+      <div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div>
+    </div>
+    <div class="content">
+      <div class="shop-wrap">
+        <div class="panel shop-section"><h3>편성 · 캐릭터 강화</h3><div class="deck-info" id="deck-info"></div><div class="unit-list" id="shop-units"></div></div>
+        <div class="panel shop-section"><h3>기지 · 자원 강화</h3><div class="up-list" id="shop-ups"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 학습 통계 ===================== -->
+  <section id="screen-stats" class="screen menu-bg">
+    <div class="topbar">
+      <button class="icon-btn" data-go="menu">←</button>
+      <h2>학습 통계</h2>
+      <div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div>
+    </div>
+    <div class="content">
+      <div class="tiles" id="stat-tiles"></div>
+      <div class="two-col">
+        <div class="panel"><h3 class="jua" style="font-size:22px;margin-bottom:6px">🔥 자주 틀리는 단어</h3><div id="stat-freq"></div></div>
+        <div class="panel"><h3 class="jua" style="font-size:22px;margin-bottom:6px">📝 틀린 단어 목록 (최근 순)</h3><div id="stat-wrong"></div></div>
+      </div>
+      <div style="text-align:right;margin-top:14px"><button class="btn red small" id="btn-reset-stats">통계 초기화</button></div>
+    </div>
+  </section>
+
+  <!-- ===================== 업적 ===================== -->
+  <section id="screen-achieve" class="screen menu-bg">
+    <div class="topbar">
+      <button class="icon-btn" data-go="menu">←</button>
+      <h2>업적</h2>
+      <div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div>
+    </div>
+    <div class="content"><div class="ach-grid" id="ach-grid"></div></div>
+  </section>
+
+  <!-- ===================== 설정 ===================== -->
+  <section id="screen-settings" class="screen menu-bg">
+    <div class="topbar">
+      <button class="icon-btn" data-go="menu">←</button>
+      <h2>설정</h2>
+    </div>
+    <div class="content">
+      <div class="panel" style="max-width:820px;margin:0 auto">
+        <div class="set-row"><div><h4>효과음</h4><p>소환 · 타격 · 정답 효과음을 켜고 끕니다.</p></div><button class="toggle" id="tg-sound"></button></div>
+        <div class="set-row"><div><h4>퀴즈 중 전투 멈춤</h4><p>켜면 퀴즈를 푸는 동안 전투가 멈춰요. 끄면 실시간 긴장감 모드!</p></div><button class="toggle" id="tg-quizpause"></button></div>
+        <div class="set-row"><div><h4>🥔 감자 모드</h4><p>컴퓨터가 느릴 때 켜세요. 해상도를 낮추고 빛 효과·구름·파티클을 줄이며 화면을 초당 30번만 그려서 렉을 줄여요. (게임 규칙은 그대로예요)</p></div><button class="toggle" id="tg-potato"></button></div>
+        <div class="set-row" style="display:block">
+          <h4>단어 목록 바꾸기</h4>
+          <p style="margin-bottom:8px">한 줄에 하나씩 <b>영어단어, 뜻</b> 형식으로 붙여 넣으세요. (예: <code>abandon, 포기하다</code>) 4개 이상 필요해요. 학교 티어 단어 리스트를 그대로 넣을 수 있어요.</p>
+          <textarea id="custom-words" placeholder="abandon, 포기하다&#10;achieve, 성취하다&#10;..."></textarea>
+          <div style="display:flex;gap:10px;margin-top:10px;align-items:center;flex-wrap:wrap">
+            <button class="btn green small" id="btn-apply-words">적용하기</button>
+            <button class="btn white small" id="btn-default-words">기본 단어로 되돌리기</button>
+            <span id="words-info" style="font-size:14px;font-weight:700"></span>
+          </div>
+        </div>
+        <div class="set-row"><div><h4>저장 데이터 초기화</h4><p>코인, 해금, 강화, 통계, 업적이 모두 지워집니다.</p></div><button class="btn red small" id="btn-reset-all">전체 초기화</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 전투 ===================== -->
+  <section id="screen-battle" class="screen">
+    <div id="hud">
+      <div class="hp-box">
+        <div class="hp-icon" style="background:#ffd6e6">🏰</div>
+        <div class="hp-wrap">
+          <div class="hp-label"><span>우리 기지</span><span id="ally-hp-txt">0</span></div>
+          <div class="hp-bar"><div class="hp-fill ally" id="ally-hp"></div></div>
+        </div>
+      </div>
+      <div class="hud-center">
+        <button class="hud-btn" id="btn-pause" title="일시정지 (Space)">II</button>
+        <div><div class="stage-tag" id="stage-tag">STAGE 1</div><div class="timer" id="timer">00:00</div></div>
+        <button class="hud-btn" id="btn-speed" title="게임 속도">x1</button>
+      </div>
+      <div class="hp-box right">
+        <div class="hp-icon" style="background:#cfc2ff">🗼</div>
+        <div class="hp-wrap">
+          <div class="hp-label"><span id="enemy-hp-txt">0</span><span>적 기지</span></div>
+          <div class="hp-bar"><div class="hp-fill enemy" id="enemy-hp" style="margin-left:auto"></div></div>
+        </div>
+      </div>
+    </div>
+    <div id="field-wrap">
+      <canvas id="field"></canvas>
+      <div id="boss-vignette"></div>
+      <div id="combo"></div>
+      <div id="banner"><span class="b-in"></span></div>
+    </div>
+    <div id="deck">
+      <div class="energy-box">
+        <div class="energy-val"><span class="bolt">⚡</span><span id="energy-txt">500</span><small id="energy-max">/ 5000</small></div>
+        <div class="energy-meter"><i id="energy-bar"></i></div>
+        <button id="eup">자원 생산 Lv.1<br><span id="eup-cost">⚡250</span></button>
+      </div>
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+
+  <!-- ===================== 퀴즈 모달 ===================== -->
+  <div class="modal" id="modal-quiz">
+    <div class="modal-box">
+      <div class="quiz-head">
+        <canvas id="quiz-portrait" width="144" height="120"></canvas>
+        <div class="t"><span id="quiz-unit">슬라임</span> 소환 퀴즈!<small>정답을 맞히면 몬스터가 출동해요</small></div>
+        <button class="icon-btn quiz-close" id="quiz-close" title="닫기 (Esc)">✕</button>
+      </div>
+      <div class="quiz-word"><span class="pos" id="quiz-pos">동사</span><div class="w" id="quiz-w">ABANDON</div><div class="q">다음 중 올바른 뜻은?</div></div>
+      <div class="opts" id="quiz-opts"></div>
+      <div class="quiz-fb" id="quiz-fb"></div>
+      <div class="quiz-foot"><span id="quiz-combo">콤보 0</span><span id="quiz-acc">이번 전투 정답률 -</span></div>
+    </div>
+  </div>
+
+  <!-- ===================== 일시정지 ===================== -->
+  <div class="modal" id="modal-pause">
+    <div class="modal-box" style="width:min(400px,92vw);text-align:center">
+      <div class="result-title" style="font-size:44px;color:#fff">일시정지</div>
+      <div class="pause-list">
+        <button class="btn green" id="p-resume">▶ 계속하기</button>
+        <button class="btn" id="p-restart">↻ 다시 시작</button>
+        <button class="btn white" id="p-sound">🔊 효과음 켜짐</button>
+        <button class="btn white" id="p-potato">🥔 감자 모드 꺼짐</button>
+        <button class="btn red" id="p-quit">🏠 스테이지 선택으로</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== 결과 ===================== -->
+  <div class="modal" id="modal-result">
+    <div class="modal-box" style="width:min(680px,94vw)">
+      <div class="result-title" id="res-title">승리!</div>
+      <div class="stars" id="res-stars"></div>
+      <div class="res-grid" id="res-battle"></div>
+      <div class="res-grid" id="res-learn"></div>
+      <div class="res-words" id="res-words"></div>
+      <div class="modal-actions" id="res-actions"></div>
+    </div>
+  </div>
+
+  <!-- ===================== 뽑기 연출 ===================== -->
+  <div class="modal" id="modal-gacha">
+    <canvas id="gacha-cv"></canvas>
+    <div id="gacha-skip">화면을 누르면 건너뛰어요</div>
+    <div id="gacha-result"></div>
+  </div>
+
+  <div id="toasts"></div>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
