@@ -1,5 +1,3 @@
-:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
-
 /* =========================================================
    S'word Master : Word Defense — 스타일
    ========================================================= */
@@ -10,8 +8,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;background:#1d1631;font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--ink);user-select:none}
-.jua{font-family:'Do Hyeon','Noto Sans KR',sans-serif;font-weight:400}
-button{font-family:'Do Hyeon','Noto Sans KR',sans-serif;cursor:pointer;border:none;color:var(--ink)}
+.jua{font-family:'Jua','Noto Sans KR',sans-serif;font-weight:400}
+button{font-family:'Jua','Noto Sans KR',sans-serif;cursor:pointer;border:none;color:var(--ink)}
 #app{position:relative;width:100%;height:100%;overflow:hidden}
 .screen{position:absolute;inset:0;display:none;flex-direction:column}
 .screen.active{display:flex}
@@ -39,17 +37,17 @@ button{font-family:'Do Hyeon','Noto Sans KR',sans-serif;cursor:pointer;border:no
   radial-gradient(circle at 85% 20%,rgba(255,255,255,.3) 0 80px,transparent 81px),
   radial-gradient(circle at 70% 90%,rgba(255,255,255,.25) 0 50px,transparent 51px);pointer-events:none}
 .topbar{position:relative;display:flex;align-items:center;gap:12px;padding:14px 20px;z-index:2}
-.topbar h2{font-family:'Do Hyeon';font-size:30px;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:0 4px 0 var(--ink)}
-.coin-pill{margin-left:auto;display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:5px 16px 5px 6px;font-family:'Do Hyeon';font-size:22px;box-shadow:0 4px 0 var(--ink)}
-.coin{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff6b0,#ffd23f 45%,#e8a700);border:2px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-family:'Do Hyeon'}
+.topbar h2{font-family:'Jua';font-size:30px;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:0 4px 0 var(--ink)}
+.coin-pill{margin-left:auto;display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:5px 16px 5px 6px;font-family:'Jua';font-size:22px;box-shadow:0 4px 0 var(--ink)}
+.coin{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff6b0,#ffd23f 45%,#e8a700);border:2px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-family:'Jua'}
 .content{position:relative;flex:1;overflow:auto;padding:4px 24px 24px;z-index:1}
 .panel{background:var(--panel);border:3px solid var(--ink);border-radius:24px;box-shadow:var(--shadow);padding:18px}
 
 /* ---------- 타이틀 ---------- */
 #screen-menu{align-items:center;justify-content:center}
 .logo{position:relative;text-align:center;z-index:1;margin-bottom:10px}
-.logo .sub{font-family:'Do Hyeon';font-size:26px;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;letter-spacing:2px}
-.logo h1{font-family:'Do Hyeon';font-size:clamp(48px,8vw,92px);line-height:1;color:var(--yellow);-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;text-shadow:0 8px 0 var(--ink);animation:float 3s ease-in-out infinite}
+.logo .sub{font-family:'Jua';font-size:26px;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;letter-spacing:2px}
+.logo h1{font-family:'Jua';font-size:clamp(48px,8vw,92px);line-height:1;color:var(--yellow);-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;text-shadow:0 8px 0 var(--ink);animation:float 3s ease-in-out infinite}
 .logo h1 span{color:var(--pink)}
 @keyframes float{50%{transform:translateY(-8px) rotate(-1deg)}}
 #menu-hero{position:relative;z-index:1;width:min(560px,80vw);height:150px}
@@ -65,29 +63,29 @@ button{font-family:'Do Hyeon','Noto Sans KR',sans-serif;cursor:pointer;border:no
 .stage-card:hover{transform:translateY(-4px) rotate(-.5deg)}
 .stage-card canvas{display:block;width:100%;height:120px}
 .stage-card .info{padding:10px 14px 14px}
-.stage-card .num{font-family:'Do Hyeon';font-size:15px;color:#fff;background:var(--ink);display:inline-block;padding:2px 10px;border-radius:999px}
-.stage-card h3{font-family:'Do Hyeon';font-size:24px;margin:6px 0 2px}
+.stage-card .num{font-family:'Jua';font-size:15px;color:#fff;background:var(--ink);display:inline-block;padding:2px 10px;border-radius:999px}
+.stage-card h3{font-family:'Jua';font-size:24px;margin:6px 0 2px}
 .stage-card p{font-size:13px;opacity:.8;min-height:36px}
-.stage-card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-family:'Do Hyeon';font-size:16px}
+.stage-card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-family:'Jua';font-size:16px}
 .stage-card.locked{cursor:not-allowed;filter:grayscale(1) brightness(.75)}
 .stage-card.locked:hover{transform:none}
-.stage-card .lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px;background:rgba(0,0,0,.25);color:#fff;font-family:'Do Hyeon'}
+.stage-card .lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px;background:rgba(0,0,0,.25);color:#fff;font-family:'Jua'}
 .badge-clear{background:var(--green);border:2px solid var(--ink);border-radius:999px;padding:1px 10px;font-size:14px}
 
 /* ---------- 상점 ---------- */
 .shop-wrap{display:grid;grid-template-columns:2fr 1fr;gap:18px}
-.shop-section h3{font-family:'Do Hyeon';font-size:24px;margin-bottom:10px}
+.shop-section h3{font-family:'Jua';font-size:24px;margin-bottom:10px}
 .unit-list{display:grid;gap:12px}
 .unit-row{display:grid;grid-template-columns:96px 1fr auto;gap:14px;align-items:center;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:10px}
 .unit-row canvas{width:96px;height:84px;background:linear-gradient(#dff6ff,#bde8c8);border-radius:12px;border:2px solid var(--ink)}
-.unit-row h4{font-family:'Do Hyeon';font-size:21px}
-.unit-row .lv{font-family:'Do Hyeon';background:var(--purple);color:#fff;border-radius:999px;padding:1px 9px;font-size:14px;margin-left:6px;vertical-align:middle}
+.unit-row h4{font-family:'Jua';font-size:21px}
+.unit-row .lv{font-family:'Jua';background:var(--purple);color:#fff;border-radius:999px;padding:1px 9px;font-size:14px;margin-left:6px;vertical-align:middle}
 .unit-row .desc{font-size:13px;opacity:.75;margin:2px 0 6px}
 .statline{display:flex;flex-wrap:wrap;gap:6px;font-size:12.5px;font-weight:700}
 .statline span{background:#f1ecff;border-radius:8px;padding:2px 7px}
 .up-list{display:grid;gap:12px}
 .up-row{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:12px}
-.up-row h4{font-family:'Do Hyeon';font-size:19px}
+.up-row h4{font-family:'Jua';font-size:19px}
 .up-row p{font-size:13px;opacity:.75;margin:2px 0 8px}
 .pips{display:flex;gap:4px;margin-bottom:8px}
 .pips i{flex:1;height:8px;border-radius:4px;background:#e5e0f0;border:1.5px solid var(--ink)}
@@ -96,24 +94,24 @@ button{font-family:'Do Hyeon','Noto Sans KR',sans-serif;cursor:pointer;border:no
 /* ---------- 통계 / 업적 / 설정 ---------- */
 .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
 .tile{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:12px;text-align:center;box-shadow:0 4px 0 var(--ink)}
-.tile b{display:block;font-family:'Do Hyeon';font-size:34px;line-height:1.1}
+.tile b{display:block;font-family:'Jua';font-size:34px;line-height:1.1}
 .tile small{font-size:13px;opacity:.75;font-weight:700}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .word-table{width:100%;border-collapse:collapse;font-size:15px}
-.word-table th{text-align:left;font-family:'Do Hyeon';font-weight:400;font-size:16px;border-bottom:3px solid var(--ink);padding:6px}
+.word-table th{text-align:left;font-family:'Jua';font-weight:400;font-size:16px;border-bottom:3px solid var(--ink);padding:6px}
 .word-table td{padding:7px 6px;border-bottom:1.5px dashed #d6cfe6}
 .word-table td.en{font-weight:900;letter-spacing:.5px}
-.word-table .cnt{font-family:'Do Hyeon';color:var(--red)}
+.word-table .cnt{font-family:'Jua';color:var(--red)}
 .empty{opacity:.6;padding:16px;text-align:center}
 .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .ach{display:flex;gap:12px;align-items:center;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:12px}
 .ach .medal{width:56px;height:56px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;border:3px solid var(--ink);background:#e9e4f2;filter:grayscale(1);opacity:.55}
 .ach.done .medal{background:radial-gradient(circle at 35% 35%,#fff6b0,#ffd23f 50%,#ff9f43);filter:none;opacity:1}
-.ach h4{font-family:'Do Hyeon';font-size:19px}
+.ach h4{font-family:'Jua';font-size:19px}
 .ach p{font-size:13px;opacity:.75}
-.ach .rw{font-family:'Do Hyeon';font-size:14px;color:#b07900}
+.ach .rw{font-family:'Jua';font-size:14px;color:#b07900}
 .set-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:2px dashed #d6cfe6}
-.set-row h4{font-family:'Do Hyeon';font-size:20px}
+.set-row h4{font-family:'Jua';font-size:20px}
 .set-row p{font-size:13px;opacity:.7}
 .toggle{width:72px;height:38px;border-radius:999px;border:3px solid var(--ink);background:#ddd;position:relative;flex:none}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;border:2px solid var(--ink);transition:left .15s}
@@ -130,26 +128,26 @@ textarea{width:100%;height:150px;border:3px solid var(--ink);border-radius:14px;
 .hp-box.right{flex-direction:row-reverse}
 .hp-icon{width:42px;height:42px;border-radius:12px;border:3px solid #120c22;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
 .hp-wrap{flex:1;max-width:340px}
-.hp-label{display:flex;justify-content:space-between;font-family:'Do Hyeon';font-size:15px;margin-bottom:3px}
+.hp-label{display:flex;justify-content:space-between;font-family:'Jua';font-size:15px;margin-bottom:3px}
 .hp-bar{height:18px;border-radius:9px;background:#120c22;border:2px solid #120c22;overflow:hidden;position:relative}
 .hp-fill{height:100%;border-radius:7px;transition:width .2s}
 .hp-fill.ally{background:linear-gradient(#7dffa8,#2fbf63)}
 .hp-fill.enemy{background:linear-gradient(#ff8fa3,#e0344f)}
 .hud-center{display:flex;align-items:center;gap:10px}
-.timer{font-family:'Do Hyeon';font-size:26px;color:#fff;background:#120c22;padding:3px 16px;border-radius:12px;min-width:100px;text-align:center}
-.stage-tag{font-family:'Do Hyeon';color:var(--yellow);font-size:16px;text-align:center}
-.hud-btn{width:44px;height:44px;border-radius:12px;background:#fff;border:3px solid #120c22;box-shadow:0 3px 0 #120c22;font-family:'Do Hyeon';font-size:18px}
+.timer{font-family:'Jua';font-size:26px;color:#fff;background:#120c22;padding:3px 16px;border-radius:12px;min-width:100px;text-align:center}
+.stage-tag{font-family:'Jua';color:var(--yellow);font-size:16px;text-align:center}
+.hud-btn{width:44px;height:44px;border-radius:12px;background:#fff;border:3px solid #120c22;box-shadow:0 3px 0 #120c22;font-family:'Jua';font-size:18px}
 .hud-btn:active{transform:translateY(2px);box-shadow:none}
 .hud-btn.on{background:var(--yellow)}
 #field-wrap{position:relative;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#120c22}
 #field{display:block;touch-action:none}
-#combo{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:'Do Hyeon';font-size:30px;color:var(--yellow);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:0 3px 0 var(--ink);opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+#combo{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:'Jua';font-size:30px;color:var(--yellow);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:0 3px 0 var(--ink);opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
 #combo.show{opacity:1}
 #combo.pop{animation:pop .35s}
 @keyframes pop{0%{transform:translateX(-50%) scale(1.6)}100%{transform:translateX(-50%) scale(1)}}
 #banner{position:absolute;left:0;right:0;top:38%;text-align:center;pointer-events:none;opacity:0}
 #banner.show{animation:banner 2.4s forwards}
-#banner .b-in{display:inline-block;font-family:'Do Hyeon';font-size:clamp(34px,6vw,64px);color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;padding:6px 40px;text-shadow:0 5px 0 var(--ink)}
+#banner .b-in{display:inline-block;font-family:'Jua';font-size:clamp(34px,6vw,64px);color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;padding:6px 40px;text-shadow:0 5px 0 var(--ink)}
 #banner.boss .b-in{color:#ffe1e1;background:linear-gradient(90deg,transparent,rgba(200,0,30,.85) 15%,rgba(200,0,30,.85) 85%,transparent)}
 #banner.fever .b-in{color:var(--yellow);background:linear-gradient(90deg,transparent,rgba(142,108,255,.85) 15%,rgba(142,108,255,.85) 85%,transparent)}
 #banner.start .b-in{background:linear-gradient(90deg,transparent,rgba(76,141,255,.85) 15%,rgba(76,141,255,.85) 85%,transparent)}
@@ -160,12 +158,12 @@ textarea{width:100%;height:150px;border:3px solid var(--ink);border-radius:14px;
 
 #deck{display:flex;align-items:stretch;gap:10px;padding:10px 14px 12px;background:linear-gradient(#3a2d63,#231a42);border-top:3px solid #120c22}
 .energy-box{flex:none;width:190px;display:flex;flex-direction:column;gap:6px}
-.energy-val{display:flex;align-items:center;gap:6px;background:#120c22;border-radius:12px;padding:5px 10px;font-family:'Do Hyeon';color:#fff;font-size:20px}
+.energy-val{display:flex;align-items:center;gap:6px;background:#120c22;border-radius:12px;padding:5px 10px;font-family:'Jua';color:#fff;font-size:20px}
 .energy-val .bolt{color:var(--yellow);font-size:22px}
 .energy-val small{font-size:13px;opacity:.6;margin-left:auto}
 .energy-meter{height:8px;background:#120c22;border-radius:4px;overflow:hidden}
 .energy-meter i{display:block;height:100%;background:linear-gradient(90deg,#ffd23f,#ff9f43);width:0}
-#eup{flex:1;min-height:44px;border-radius:14px;background:var(--orange);border:3px solid #120c22;box-shadow:0 4px 0 #120c22;font-family:'Do Hyeon';font-size:15px;line-height:1.15;padding:4px}
+#eup{flex:1;min-height:44px;border-radius:14px;background:var(--orange);border:3px solid #120c22;box-shadow:0 4px 0 #120c22;font-family:'Jua';font-size:15px;line-height:1.15;padding:4px}
 #eup:active{transform:translateY(3px);box-shadow:0 1px 0 #120c22}
 #eup.disabled{filter:grayscale(.85) brightness(.75)}
 .cards{flex:1;display:flex;gap:10px;justify-content:center}
@@ -173,9 +171,9 @@ textarea{width:100%;height:150px;border:3px solid var(--ink);border-radius:14px;
 .card:hover{transform:translateY(-3px)}
 .card:active{transform:translateY(3px);box-shadow:0 2px 0 #120c22}
 .card canvas{width:100%;height:70px;object-fit:contain;border-radius:10px;background:linear-gradient(#cdefff,#c7ecd0)}
-.card .nm{font-family:'Do Hyeon';font-size:15px;margin-top:2px;white-space:nowrap}
-.card .cost{font-family:'Do Hyeon';font-size:16px;background:var(--yellow);border:2px solid #120c22;border-radius:999px;padding:0 10px;margin-top:2px}
-.card .key{position:absolute;top:5px;left:6px;font-family:'Do Hyeon';font-size:12px;background:#120c22;color:#fff;border-radius:6px;padding:0 5px}
+.card .nm{font-family:'Jua';font-size:15px;margin-top:2px;white-space:nowrap}
+.card .cost{font-family:'Jua';font-size:16px;background:var(--yellow);border:2px solid #120c22;border-radius:999px;padding:0 10px;margin-top:2px}
+.card .key{position:absolute;top:5px;left:6px;font-family:'Jua';font-size:12px;background:#120c22;color:#fff;border-radius:6px;padding:0 5px}
 .card .cdov{position:absolute;left:0;right:0;bottom:0;background:rgba(20,12,40,.62);pointer-events:none}
 .card.poor{filter:grayscale(.9) brightness(.8)}
 .card.poor .cost{background:#ccc}
@@ -189,28 +187,28 @@ textarea{width:100%;height:150px;border:3px solid var(--ink);border-radius:14px;
 @keyframes modalIn{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}
 .quiz-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
 .quiz-head canvas{width:72px;height:60px;border-radius:12px;border:2px solid var(--ink);background:linear-gradient(#cdefff,#c7ecd0)}
-.quiz-head .t{font-family:'Do Hyeon';font-size:18px;line-height:1.2}
+.quiz-head .t{font-family:'Jua';font-size:18px;line-height:1.2}
 .quiz-head .t small{display:block;font-family:'Noto Sans KR';font-size:13px;opacity:.7}
 .quiz-close{margin-left:auto}
-.quiz-word{position:relative;text-align:center;background:linear-gradient(#5b43c9,#8e6cff);color:#fff;border:3px solid var(--ink);border-radius:20px;padding:16px 10px 12px;margin:8px 0 14px}
+.quiz-word{position:relative;text-align:center;background:linear-gradient(#5b43c9,#8e6cff);color:#fff;border:3px solid var(--ink);border-radius:20px;padding:30px 10px 12px;margin:8px 0 14px}
 .quiz-word .pos{position:absolute;top:8px;left:12px;font-size:12px;background:rgba(255,255,255,.25);border-radius:6px;padding:1px 8px;font-weight:700}
-.quiz-word .w{font-family:'Do Hyeon';font-size:clamp(36px,6vw,54px);letter-spacing:3px;text-shadow:0 4px 0 rgba(0,0,0,.25)}
+.quiz-word .w{font-family:'Jua';font-size:clamp(36px,6vw,54px);letter-spacing:3px;text-shadow:0 4px 0 rgba(0,0,0,.25)}
 .quiz-word .q{font-size:15px;opacity:.9;font-weight:700}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .opt{display:flex;align-items:center;gap:10px;text-align:left;padding:13px 14px;border-radius:16px;background:#fff;border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);font-family:'Noto Sans KR';font-weight:700;font-size:18px;transition:transform .08s}
 .opt:hover{background:#fff7d6}
 .opt:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
-.opt .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Do Hyeon';display:flex;align-items:center;justify-content:center;font-size:16px}
+.opt .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Jua';display:flex;align-items:center;justify-content:center;font-size:16px}
 .opt.correct{background:#b8f5cd;animation:okPulse .5s}
 .opt.wrong{background:#ffc2c2;animation:shake .4s}
 .opt.dim{opacity:.45}
 @keyframes okPulse{40%{transform:scale(1.05)}}
 @keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
-.quiz-fb{height:40px;margin-top:12px;text-align:center;font-family:'Do Hyeon';font-size:24px}
+.quiz-fb{height:40px;margin-top:12px;text-align:center;font-family:'Jua';font-size:24px}
 .quiz-fb.ok{color:#1fa557}
 .quiz-fb.no{color:var(--red)}
 .quiz-foot{display:flex;justify-content:space-between;font-size:13px;opacity:.75;font-weight:700;margin-top:4px}
-.result-title{text-align:center;font-family:'Do Hyeon';font-size:56px;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--ink);line-height:1.1}
+.result-title{text-align:center;font-family:'Jua';font-size:56px;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--ink);line-height:1.1}
 .result-title.win{color:var(--yellow)}
 .result-title.lose{color:#a9b4ff}
 .stars{text-align:center;font-size:44px;letter-spacing:6px;margin:4px 0}
@@ -219,68 +217,193 @@ textarea{width:100%;height:150px;border:3px solid var(--ink);border-radius:14px;
 .res-grid .tile b{font-size:26px}
 .res-grid .tile{padding:8px;box-shadow:0 3px 0 var(--ink)}
 .res-words{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:10px 12px;margin-bottom:12px;max-height:150px;overflow:auto}
-.res-words h4{font-family:'Do Hyeon';font-size:18px;margin-bottom:4px}
+.res-words h4{font-family:'Jua';font-size:18px;margin-bottom:4px}
 .chip{display:inline-block;background:#ffe3e3;border:2px solid var(--ink);border-radius:10px;padding:2px 9px;margin:3px;font-size:14px;font-weight:700}
 .chip i{font-style:normal;font-weight:400;opacity:.75}
 .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .pause-list{display:grid;gap:12px;width:280px;margin:16px auto 4px}
 #toasts{position:absolute;top:70px;right:16px;z-index:80;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:0 4px 0 var(--ink);padding:10px 16px;font-family:'Do Hyeon';font-size:17px;animation:toast 3.2s forwards;display:flex;gap:10px;align-items:center}
+.toast{background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:0 4px 0 var(--ink);padding:10px 16px;font-family:'Jua';font-size:17px;animation:toast 3.2s forwards;display:flex;gap:10px;align-items:center}
 .toast .em{font-size:26px}
 @keyframes toast{0%{transform:translateX(120%)}10%,85%{transform:translateX(0)}100%{transform:translateX(130%);opacity:0}}
 .hint-keys{font-size:12px;opacity:.6;text-align:center;margin-top:8px}
 
 /* ---------- 등급 ---------- */
-.rar{position:absolute;top:4px;right:5px;font-size:11px;letter-spacing:-1px;font-family:'Do Hyeon';padding:0 5px;border-radius:6px;color:#fff;border:1.5px solid #120c22}
+.rar{position:absolute;top:4px;right:5px;font-size:11px;letter-spacing:-1px;font-family:'Jua';padding:0 5px;border-radius:6px;color:#fff;border:1.5px solid #120c22}
 .r-N{--rc:#8d98ad}.r-R{--rc:#4c8dff}.r-SR{--rc:#a35cff}.r-UR{--rc:#ffb300}
 .rar.r-N,.rbadge.r-N{background:#8d98ad}.rar.r-R,.rbadge.r-R{background:#4c8dff}.rar.r-SR,.rbadge.r-SR{background:#a35cff}.rar.r-UR,.rbadge.r-UR{background:linear-gradient(90deg,#ff9f43,#ffd23f,#ff7aa8)}
 .card.r-R,.card.r-SR,.card.r-UR{border-color:var(--rc)}
 .card.r-UR{background:linear-gradient(#fff7d6,#ffe9a8)}
 .card.r-SR{background:linear-gradient(#fbf4ff,#ead9ff)}
-.rbadge{display:inline-block;white-space:nowrap;font-family:'Do Hyeon';font-size:13px;color:#fff;border:2px solid var(--ink);border-radius:999px;padding:0 9px;vertical-align:middle;margin-left:6px;text-shadow:0 1px 0 rgba(0,0,0,.3)}
+.rbadge{display:inline-block;white-space:nowrap;font-family:'Jua';font-size:13px;color:#fff;border:2px solid var(--ink);border-radius:999px;padding:0 9px;vertical-align:middle;margin-left:6px;text-shadow:0 1px 0 rgba(0,0,0,.3)}
 .unit-row.r-UR{background:linear-gradient(90deg,#fff7d6,#fff)}
 .unit-row.r-SR{background:linear-gradient(90deg,#f6ecff,#fff)}
 .unit-row .btns{display:flex;flex-direction:column;gap:8px;align-items:stretch;min-width:118px}
 .btn.on-deck{background:#ffd23f}
-.deck-info{font-family:'Do Hyeon';font-size:16px;margin:-4px 0 10px;opacity:.8}
+.deck-info{font-family:'Jua';font-size:16px;margin:-4px 0 10px;opacity:.8}
 
 /* ---------- 뽑기 ---------- */
-.ticket-pill{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:5px 14px;font-family:'Do Hyeon';font-size:22px;box-shadow:0 4px 0 var(--ink)}
+.ticket-pill{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:5px 14px;font-family:'Jua';font-size:22px;box-shadow:0 4px 0 var(--ink)}
 .menu-pills{position:absolute;top:16px;right:20px;z-index:2;display:flex;gap:10px}
 .dot{position:absolute;top:-8px;right:-8px;background:var(--red);color:#fff;border:2px solid var(--ink);border-radius:999px;font-size:14px;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;padding:0 6px;animation:float 1.6s ease-in-out infinite}
 .gacha-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;align-items:start}
 #gacha-machine{width:100%;height:300px;display:block}
 .gacha-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 .gacha-btns .btn{font-size:22px}
-.pity{margin:14px 0 4px;font-family:'Do Hyeon';font-size:16px}
+.pity{margin:14px 0 4px;font-family:'Jua';font-size:16px}
 .pity-bar{height:14px;border-radius:7px;background:#eee6fb;border:2px solid var(--ink);overflow:hidden}
 .pity-bar i{display:block;height:100%;background:linear-gradient(90deg,#ff9f43,#ffd23f,#ff7aa8)}
 .rate-table{width:100%;border-collapse:collapse}
 .rate-table td{padding:7px 6px;border-bottom:1.5px dashed #d6cfe6;font-size:15px;vertical-align:middle}
-.rate-table .pct{font-family:'Do Hyeon';font-size:20px;text-align:right;white-space:nowrap}
+.rate-table .pct{font-family:'Jua';font-size:20px;text-align:right;white-space:nowrap}
 .rate-chars{display:flex;flex-wrap:wrap;gap:6px}
 .rate-chars span{display:inline-flex;align-items:center;gap:4px;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:1px 7px 1px 2px;font-size:13px;font-weight:700}
 .rate-chars canvas{width:30px;height:26px}
 .rate-chars .own{opacity:.5}
 #modal-gacha{background:#0b0716;backdrop-filter:none;z-index:70}
 #gacha-cv{position:absolute;inset:0;width:100%;height:100%}
-#gacha-skip{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:rgba(255,255,255,.6);font-family:'Do Hyeon';font-size:18px;pointer-events:none}
+#gacha-skip{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:rgba(255,255,255,.6);font-family:'Jua';font-size:18px;pointer-events:none}
 #gacha-result{position:relative;display:none;flex-direction:column;align-items:center;z-index:2}
 #gacha-result.show{display:flex;animation:modalIn .4s cubic-bezier(.2,1.6,.4,1)}
 .g-card{position:relative;width:300px;background:#fff;border:4px solid var(--rc);border-radius:26px;box-shadow:0 0 0 4px var(--ink),0 0 50px var(--rc);padding:16px;text-align:center}
 .g-card canvas{width:240px;height:200px;background:radial-gradient(circle,#fff 0,#eef6ff 70%);border-radius:18px;border:2px solid var(--ink)}
-.g-card h3{font-family:'Do Hyeon';font-size:30px;margin-top:6px}
+.g-card h3{font-family:'Jua';font-size:30px;margin-top:6px}
 .g-card .stars{font-size:26px;letter-spacing:2px;margin:0;color:var(--rc);-webkit-text-stroke:1.5px var(--ink)}
 .g-card .gdesc{font-size:14px;opacity:.8;margin:4px 0 8px}
-.g-new{position:absolute;top:-18px;right:-14px;font-family:'Do Hyeon';font-size:24px;background:var(--red);color:#fff;border:3px solid var(--ink);border-radius:14px;padding:2px 12px;transform:rotate(10deg);animation:float 1.2s ease-in-out infinite}
-.g-dup{font-family:'Do Hyeon';font-size:18px;color:#7a4ae0;margin-top:6px}
+.g-new{position:absolute;top:-18px;right:-14px;font-family:'Jua';font-size:24px;background:var(--red);color:#fff;border:3px solid var(--ink);border-radius:14px;padding:2px 12px;transform:rotate(10deg);animation:float 1.2s ease-in-out infinite}
+.g-dup{font-family:'Jua';font-size:18px;color:#7a4ae0;margin-top:6px}
 .g-grid{display:grid;grid-template-columns:repeat(5,140px);gap:12px}
 .g-mini{position:relative;background:#fff;border:3px solid var(--rc);box-shadow:0 0 0 3px var(--ink),0 0 18px var(--rc);border-radius:16px;padding:6px;text-align:center;opacity:0;animation:modalIn .35s forwards}
 .g-mini canvas{width:120px;height:96px}
-.g-mini b{display:block;font-family:'Do Hyeon';font-weight:400;font-size:16px}
-.g-mini small{font-family:'Do Hyeon';font-size:13px;color:#7a4ae0}
+.g-mini b{display:block;font-family:'Jua';font-weight:400;font-size:16px}
+.g-mini small{font-family:'Jua';font-size:13px;color:#7a4ae0}
 .g-mini .g-new{font-size:14px;top:-10px;right:-8px;padding:0 7px;border-width:2px}
 .g-actions{display:flex;gap:12px;margin-top:20px}
+
+/* =========================================================
+   로비 · 하단 탭 (캐주얼 디펜스 게임 스타일: 두꺼운 외곽선, 둥근 버튼, 등급 색)
+   ========================================================= */
+.lobby-bg{background:linear-gradient(180deg,#5fc8ff 0%,#8fe0ff 45%,#b6f0a8 46%,#7fd36b 100%)}
+#lobby-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.lobby-center{justify-content:flex-start!important;padding-top:2vh}
+.lobby-center .logo{margin-bottom:4px}
+.lobby-bg::after{display:none;content:"";position:absolute;left:0;right:0;top:46%;height:16px;background:repeating-linear-gradient(90deg,#5fb84f 0 22px,#6cc65c 22px 44px);opacity:.6;pointer-events:none}
+.lobby-top{position:relative;z-index:3;align-self:stretch;display:flex;align-items:center;gap:10px;padding:14px 18px}
+.round-btn{width:50px;height:50px;border-radius:50%;background:#fff;border:4px solid var(--ink);box-shadow:0 4px 0 var(--ink);font-size:24px;display:flex;align-items:center;justify-content:center}
+.round-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.lobby-pills{margin-left:auto;display:flex;gap:10px}
+.lobby-pills .coin-pill{margin-left:0}
+.lobby-center{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding-bottom:20px}
+.lobby-center .logo{margin:0}
+.lobby-center .logo h1{font-size:clamp(40px,6.5vw,76px)}
+.lobby-stage{font-family:'Jua';font-size:18px;background:rgba(43,33,64,.85);color:#fff;border-radius:999px;padding:5px 18px;border:3px solid var(--ink)}
+.lobby-stage b{color:var(--yellow);font-weight:400}
+.mega-btn{font-family:'Jua';font-size:clamp(30px,4vw,40px);padding:14px 64px;border-radius:26px;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:0 3px 0 var(--ink);
+  background:linear-gradient(#ffe066,#ffb703);border:5px solid var(--ink);box-shadow:0 8px 0 var(--ink),inset 0 -8px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.5);animation:megaPulse 1.6s ease-in-out infinite}
+.mega-btn:active{transform:translateY(6px);box-shadow:0 2px 0 var(--ink)}
+@keyframes megaPulse{50%{transform:scale(1.04)}}
+.lobby-quick{display:flex;gap:10px}
+.chip-btn{font-family:'Jua';font-size:17px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:6px 16px;box-shadow:0 4px 0 var(--ink)}
+.chip-btn b{font-weight:400;background:var(--red);color:#fff;border-radius:999px;padding:0 8px;margin-left:4px}
+.chip-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+#app.has-nav .screen:not(#screen-battle){bottom:86px}
+#navbar{position:absolute;left:0;right:0;bottom:0;height:86px;display:none;align-items:flex-end;justify-content:center;gap:6px;padding:0 10px 8px;background:linear-gradient(#3a2d63,#231a42);border-top:4px solid #120c22;z-index:40}
+#app.has-nav #navbar{display:flex}
+#navbar button{position:relative;flex:1;max-width:150px;height:66px;border-radius:18px;background:linear-gradient(#5b4a8f,#43357a);border:3px solid #120c22;box-shadow:0 4px 0 #120c22;color:#fff;font-family:'Jua';font-size:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:transform .12s,height .12s}
+#navbar button .ni{font-size:26px;line-height:1.1}
+#navbar button.active{height:80px;transform:translateY(-6px);background:linear-gradient(#ffe066,#ffb703);color:var(--ink)}
+#navbar button.home{background:linear-gradient(#ff8fb8,#ff5d93)}
+#navbar button.home.active{background:linear-gradient(#ffe066,#ffb703)}
+#navbar .dot{top:-6px;right:6px}
+/* 등급 색 */
+.g-bg-N{background:linear-gradient(#f1f4f8,#d3dae6)!important}
+.g-bg-R{background:linear-gradient(#e3efff,#a9caff)!important}
+.g-bg-SR{background:linear-gradient(#f4e8ff,#cfa9ff)!important}
+.g-bg-UR{background:linear-gradient(#fff6cc,#ffcf52)!important}
+.card.r-N{border-color:#120c22}
+.card .capb{position:absolute;top:22px;right:5px;font-family:'Jua';font-size:11px;background:#120c22;color:#fff;border-radius:6px;padding:0 5px}
+/* 편성 */
+.preset-row{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.preset-row .btn{font-size:18px;padding:8px 18px}
+.preset-row .btn.cur{background:var(--yellow)}
+.preset-row .btn:not(.cur){background:#fff}
+.slots{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.slot{position:relative;border:4px solid var(--ink);border-radius:18px;padding:6px;text-align:center;cursor:pointer;box-shadow:0 4px 0 var(--ink);min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.slot canvas{width:100%;max-width:110px;aspect-ratio:192/152}
+.slot b{font-family:'Jua';font-weight:400;font-size:15px}
+.slot small{font-family:'Jua';font-size:13px}
+.slot .num{position:absolute;top:4px;left:6px;font-family:'Jua';font-size:13px;background:var(--ink);color:#fff;border-radius:6px;padding:0 6px}
+.slot.empty{border-style:dashed;background:rgba(255,255,255,.5);box-shadow:none;color:#8a80a8;font-family:'Jua';font-size:30px}
+.unit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px}
+.utile{position:relative;border:3px solid var(--ink);border-radius:16px;padding:6px 6px 8px;text-align:center;cursor:pointer;box-shadow:0 4px 0 var(--ink);transition:transform .1s}
+.utile:hover{transform:translateY(-3px)}
+.utile canvas{width:100%;aspect-ratio:192/152}
+.utile b{display:block;font-family:'Jua';font-weight:400;font-size:15px;line-height:1.2}
+.utile .meta{font-family:'Jua';font-size:12.5px;opacity:.85}
+.utile .tags{font-size:12px;min-height:16px}
+.utile.in{outline:4px solid #5ed38a;outline-offset:-2px}
+.utile.in::after{content:"✔";position:absolute;top:4px;right:8px;font-family:'Jua';font-size:18px;color:#1fa557}
+.utile.locked{filter:grayscale(1);opacity:.55;cursor:default}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap}
+.filter-row button{font-family:'Jua';font-size:14px;border:2px solid var(--ink);border-radius:999px;padding:2px 12px;background:#fff}
+.filter-row button.on{background:var(--ink);color:#fff}
+.sel{font-family:'Jua';font-size:15px;border:2px solid var(--ink);border-radius:10px;padding:3px 8px;background:#fff;margin-left:auto}
+.stage-deck{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.stage-deck .mini{display:flex;gap:4px}
+.stage-deck .mini canvas{width:44px;height:36px;border-radius:8px;border:2px solid var(--ink)}
+/* 학습 기록 */
+.word-table .bar{display:inline-block;width:70px;height:9px;border-radius:5px;background:#eee;border:1.5px solid var(--ink);vertical-align:middle;overflow:hidden;margin-right:6px}
+.word-table .bar i{display:block;height:100%;background:var(--green)}
+.word-table .ok{font-family:'Jua';color:#1fa557}
+.st-note{font-family:'Jua';font-size:13px;background:#ffe3e3;border:2px solid var(--red);border-radius:999px;padding:0 8px;white-space:nowrap}
+.st-done{font-family:'Jua';font-size:13px;background:#e6fbee;border:2px solid #1fa557;border-radius:999px;padding:0 8px;white-space:nowrap}
+.st-new{font-family:'Jua';font-size:13px;opacity:.5;white-space:nowrap}
+.rv-bar{height:12px;border-radius:6px;background:#eee6fb;border:2px solid var(--ink);overflow:hidden;margin:6px 0 4px}
+.rv-bar i{display:block;height:100%;background:linear-gradient(90deg,#5ed38a,#ffd23f);width:0;transition:width .3s}
+.word-table-wrap{max-height:460px;overflow:auto}
+
+/* 뽑기 2.0 */
+.pick-banner{position:relative;display:grid;grid-template-columns:150px 1fr;align-items:center;gap:10px;border:4px solid var(--ink);border-radius:20px;padding:22px 14px 10px;margin-bottom:6px;text-align:left;box-shadow:0 5px 0 var(--ink);overflow:hidden}
+.pick-banner::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent 0 10deg,rgba(255,255,255,.35) 10deg 20deg,transparent 20deg 40deg);animation:spin 12s linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pick-ribbon{position:absolute;top:0;left:0;right:0;text-align:center;font-family:'Jua';font-size:15px;color:#fff;background:linear-gradient(90deg,#ff5d93,#ffb703,#ff5d93);border-bottom:3px solid var(--ink);padding:2px 0;z-index:1}
+.pick-banner canvas{position:relative;width:150px;height:125px;z-index:1}
+.pick-info{position:relative;z-index:1}
+.pick-name{font-size:22px;line-height:1.2}
+.pick-desc{font-size:13px;opacity:.8;margin:4px 0}
+.pick-rate{font-family:'Jua';font-size:14px;color:#e0344f}
+#gacha-machine{height:200px!important}
+.pick-tag{position:absolute;top:-14px;left:-10px;font-family:'Jua';font-size:15px;background:linear-gradient(90deg,#ff5d93,#ffb703);color:#fff;border:3px solid var(--ink);border-radius:12px;padding:1px 9px;transform:rotate(-8deg);z-index:3}
+.g-card canvas.sil{filter:brightness(0) drop-shadow(0 0 12px #fff)}
+.g-card canvas{transition:filter .35s}
+.spop{display:inline-block;animation:spop .35s cubic-bezier(.2,1.8,.4,1)}
+@keyframes spop{0%{transform:scale(3);opacity:0}100%{transform:scale(1);opacity:1}}
+.fcard{width:140px;height:196px;perspective:700px;position:relative}
+.fcard .fin{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.fcard.flipped .fin{transform:rotateY(180deg)}
+.fback,.ffront{position:absolute;inset:0;backface-visibility:hidden;border:4px solid var(--ink);border-radius:16px;box-shadow:0 4px 0 var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ffront{transform:rotateY(180deg);padding:4px;text-align:center}
+.ffront canvas{width:120px;height:100px}
+.ffront b{font-family:'Jua';font-weight:400;font-size:15px;line-height:1.15}
+.ffront small{font-family:'Jua';font-size:12px;color:#7a4ae0}
+.fstars{font-size:15px;letter-spacing:-1px;color:#ffb300;-webkit-text-stroke:1px var(--ink)}
+.fq{font-family:'Jua';font-size:58px;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill}
+.fcard.r-SR .fback,.fcard.r-UR .fback{animation:backGlow 1s ease-in-out infinite}
+.fcard.r-UR .fback{box-shadow:0 4px 0 var(--ink),0 0 26px 6px #ffd23f}
+.fcard.r-SR .fback{box-shadow:0 4px 0 var(--ink),0 0 20px 4px #c77dff}
+@keyframes backGlow{50%{filter:brightness(1.25)}}
+.fcard.tease .fin{animation:tease .12s linear infinite}
+@keyframes tease{0%,100%{transform:rotate(-4deg) scale(1.06)}50%{transform:rotate(4deg) scale(1.1)}}
+.fcard .g-new{font-size:13px;top:-10px;right:-8px;padding:0 7px;border-width:2px}
+#gacha-result .g-grid{grid-template-columns:repeat(5,140px)}
+
+#cannon{position:relative;flex:none;width:110px;align-self:center;aspect-ratio:1;border-radius:50%;border:4px solid #120c22;background:conic-gradient(#ffd23f var(--p,0%),#5b4a8f 0);box-shadow:0 5px 0 #120c22;padding:0}
+#cannon .cn-in{position:absolute;inset:9px;border-radius:50%;background:#fff;border:3px solid #120c22;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Jua';font-size:24px;line-height:1.05}
+#cannon .cn-in b{font-weight:400;font-size:13px}
+#cannon .cn-in small{font-size:11px;opacity:.7}
+#cannon.ready{animation:readyGlow 1s ease-in-out infinite}
+#cannon.ready .cn-in{background:#fff3b0}
+#cannon:active{transform:translateY(3px)}
 
 @media (max-height:640px){
   #hud{padding:5px 12px}.hp-icon{width:34px;height:34px}.timer{font-size:22px}
@@ -292,67 +415,3 @@ textarea{width:100%;height:150px;border:3px solid var(--ink);border-radius:14px;
   .tiles{grid-template-columns:repeat(3,1fr)}
   .energy-box{width:140px}
 }
-
-/* =========================================================
-   리디자인: 차분한 톤, 읽기 쉬운 편성 화면
-   ========================================================= */
-:root{--ink:#222a3a;--cream:#f4efe3;--panel:#f7f3e8;--yellow:#f2b632;--green:#5aae7a;--red:#d9534f;--blue:#4a7fd1;--purple:#6f64c4;--pink:#e0607e;--orange:#e8923a;--shadow:0 3px 0 rgba(20,26,42,.35)}
-.menu-bg{background:linear-gradient(#3b5380,#27365a)}
-.menu-bg::before{background:repeating-linear-gradient(45deg,rgba(255,255,255,.035) 0 14px,transparent 14px 28px)}
-.btn{border-radius:12px;border-width:2px;font-size:19px}
-.btn.pink,.btn.purple,.btn.blue{text-shadow:none}
-.menu-buttons .btn{background:var(--panel);color:var(--ink);text-shadow:none}
-.menu-buttons .btn.big{background:var(--yellow)}
-.panel,.modal-box{border-width:2px;border-radius:14px;box-shadow:var(--shadow)}
-.modal-box{border-width:3px;box-shadow:0 6px 0 var(--ink)}
-.coin-pill,.ticket-pill{border-width:2px;box-shadow:0 3px 0 var(--ink)}
-.topbar h2{-webkit-text-stroke:0;font-size:28px;letter-spacing:1px;text-shadow:0 2px 0 rgba(0,0,0,.35)}
-.logo h1{-webkit-text-stroke:0;color:#fff;text-shadow:0 5px 0 rgba(0,0,0,.35);animation:none}
-.logo h1 span{color:var(--yellow)}
-.logo .sub{-webkit-text-stroke:0;color:#cfd8ee;font-size:20px;letter-spacing:6px}
-.stage-card,.up-row,.ach,.tile{border-width:2px;border-radius:14px}
-.dot{animation:none;border-width:2px}
-#hud,#deck{background:#232c45}
-.card{border-radius:10px;border-width:2px;background:#f7f3e8;box-shadow:0 4px 0 #0e1220}
-.card.r-UR,.card.r-SR{background:#f7f3e8}
-.card.ready{animation:none;border-color:var(--yellow);box-shadow:0 4px 0 #0e1220,0 0 0 2px var(--yellow)}
-.card canvas{background:#dfeee0}
-.card .cost{border-width:1.5px;border-radius:6px}
-.card .rar{display:none}
-.opt{border-radius:12px;border-width:2px;box-shadow:0 3px 0 var(--ink)}
-.quiz-word{background:#3d4f8a;border-width:2px;border-radius:14px}
-/* 편성 화면 */
-.shop-wrap{grid-template-columns:minmax(0,2.2fr) minmax(240px,1fr)}
-.slots{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:14px}
-.slot{position:relative;aspect-ratio:1/1;border-radius:10px;border:2px solid var(--ink);background:#dfeee0;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.slot.full{box-shadow:0 3px 0 var(--ink)}
-.slot.full:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-.slot canvas{width:100%;height:100%;object-fit:contain}
-.slot.empty{background:rgba(34,42,58,.08);border-style:dashed;box-shadow:none;font-family:'Do Hyeon';font-size:24px;color:rgba(34,42,58,.35)}
-.slot .sn{position:absolute;top:3px;left:4px;font-family:'Do Hyeon';font-size:12px;background:var(--ink);color:#fff;border-radius:5px;padding:0 5px}
-.slot .sc{position:absolute;bottom:0;left:0;right:0;font-family:'Do Hyeon';font-size:13px;background:var(--yellow);border-top:2px solid var(--ink);text-align:center}
-.ushop{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:14px;align-items:start}
-.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
-.ucard{position:relative;display:flex;flex-direction:column;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:4px 2px 5px;box-shadow:0 3px 0 var(--ink);min-width:0}
-.ucard canvas{width:100%;height:auto;aspect-ratio:5/4;background:#dfeee0;border-radius:6px}
-.ucard .un{font-family:'Do Hyeon';font-size:13px;margin-top:3px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ucard .ul{font-size:11px;font-weight:700;opacity:.7}
-.ucard.in{background:#fff4cf}
-.ucard.sel{outline:3px solid var(--blue);outline-offset:1px}
-.ucard.lock{background:#e4e1d8}
-.ucard.g-R{border-color:#4a7fd1}.ucard.g-SR{border-color:#8a5ad0}.ucard.g-UR{border-color:#d9961a}
-.udetail{position:sticky;top:0;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:12px;min-width:0}
-.udetail canvas{display:block;width:100%;max-width:240px;margin:0 auto;aspect-ratio:5/4;height:auto;background:#dfeee0;border-radius:8px;border:2px solid var(--ink)}
-.udetail h4{font-family:'Do Hyeon';font-size:21px;margin-top:8px}
-.udetail .lv{font-family:'Do Hyeon';background:var(--ink);color:#fff;border-radius:6px;padding:0 8px;font-size:14px;margin-left:6px;vertical-align:middle}
-.udetail .desc{font-size:13px;opacity:.8;margin:2px 0 8px}
-.dstats{width:100%;border-collapse:collapse;font-size:13px}
-.dstats td{padding:4px 5px;border-bottom:1px dashed #cfc8b8}
-.dstats td:nth-child(odd){opacity:.65}
-.dstats td:nth-child(even){font-weight:900;text-align:right}
-.udetail .next{font-size:12px;color:#2f7a4f;font-weight:700;margin-top:6px}
-.udetail .statline{margin-top:8px}
-.udetail .btns{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.deck-info{font-family:'Do Hyeon';font-size:16px;margin:-4px 0 10px;opacity:.8}
-@media (max-width:900px){.ushop{grid-template-columns:1fr}.udetail{position:static}}
-@media (max-width:520px){.slots{grid-template-columns:repeat(3,minmax(0,1fr))}}

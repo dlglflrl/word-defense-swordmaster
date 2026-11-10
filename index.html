@@ -3,32 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>S&#39;word Master: 워드 디펜스</title>
+<title>S'word Master: 워드 디펜스</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
 <div id="app">
 
   <!-- ===================== 타이틀 ===================== -->
-  <section id="screen-menu" class="screen menu-bg active">
-    <div class="menu-pills"><div class="ticket-pill">🎟️ <span class="ticket-val">0</span></div><div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div></div>
-    <div class="logo">
-      <div class="sub">S'word Master</div>
-      <h1>워드 <span>디펜스</span></h1>
+  <section id="screen-menu" class="screen lobby-bg active">
+    <canvas id="lobby-bg"></canvas>
+    <div class="lobby-top">
+      <button class="round-btn" data-go="achieve" title="업적">🏆</button>
+      <button class="round-btn" data-go="settings" title="설정">⚙️</button>
+      <div class="lobby-pills"><div class="ticket-pill">🎟️ <span class="ticket-val">0</span></div><div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div></div>
     </div>
-    <canvas id="menu-hero"></canvas>
-    <div class="menu-buttons">
-      <button class="btn pink big" data-go="stages">출격</button>
-      <button class="btn purple" data-go="gacha" style="position:relative">캐릭터 뽑기<span class="dot" id="gacha-dot" style="display:none">0</span></button>
-      <button class="btn" data-go="shop">편성 · 강화</button>
-      <button class="btn green" data-go="stats">학습 기록</button>
-      <button class="btn blue" data-go="achieve">업적</button>
-      <button class="btn white" data-go="settings">설정</button>
+    <div class="lobby-center">
+      <div class="logo">
+        <div class="sub">S'word Master</div>
+        <h1>워드 <span>디펜스</span></h1>
+      </div>
+      <div class="lobby-stage" id="lobby-stage"></div>
+      <button class="mega-btn" data-go="stages">⚔️ 전투 시작</button>
+      <div class="lobby-quick">
+        <button class="chip-btn" id="lobby-review">📝 오답 시험 <b id="lobby-wrong">0</b></button>
+        <button class="chip-btn" data-go="deck">🐾 편성 <b id="lobby-deck">1</b></button>
+      </div>
     </div>
-    <div class="foot-note">영어 단어를 맞히면 몬스터가 출동해요! · 단축키: 1~5 소환, 1~4 정답 선택, Space 일시정지</div>
+    <div class="foot-note">영어 단어를 맞히면 몬스터가 출동해요! · 단축키: 1~6 소환, 1~4 정답 선택, Space 일시정지</div>
   </section>
 
   <!-- ===================== 스테이지 선택 ===================== -->
@@ -52,11 +56,18 @@
     <div class="content">
       <div class="gacha-wrap">
         <div class="panel" style="text-align:center">
+          <div class="pick-banner" id="pick-banner">
+            <div class="pick-ribbon">⭐ 오늘의 PICK UP ⭐</div>
+            <canvas id="pick-cv" width="300" height="250"></canvas>
+            <div class="pick-info"><div class="pick-name jua" id="pick-name"></div><div class="pick-desc" id="pick-desc"></div><div class="pick-rate" id="pick-rate"></div></div>
+          </div>
           <canvas id="gacha-machine"></canvas>
           <div class="gacha-btns">
+            <button class="btn green" id="g-free">🎁 오늘의 무료 뽑기</button>
             <button class="btn pink" id="g-pull1">🎟️ 1회 뽑기</button>
-            <button class="btn purple" id="g-pull10">🎟️ 10회 뽑기</button>
+            <button class="btn purple" id="g-pull10">🎟️ 10회 뽑기<small style="display:block;font-size:12px">레어 이상 1개 확정!</small></button>
           </div>
+          <p style="font-size:13.5px;margin-top:8px;font-weight:700;color:#7a4ae0">✨ 뽑기 전에 나오는 <b>행운의 단어</b>를 맞히면 에픽·전설 확률이 2배!</p>
           <div class="gacha-btns"><button class="btn white small" id="g-buy">코인으로 뽑기권 사기 · C 250</button></div>
           <div class="pity" id="g-pity">전설 확정까지 30회</div>
           <div class="pity-bar"><i id="g-pity-bar" style="width:0"></i></div>
@@ -65,8 +76,31 @@
         <div class="panel">
           <h3 class="jua" style="font-size:24px;margin-bottom:6px">📜 등급별 확률</h3>
           <table class="rate-table" id="rate-table"></table>
-          <p style="font-size:13px;opacity:.75;margin-top:10px">등급이 높을수록 소환할 때 자원(⚡)이 많이 들지만 성능은 확실해요!</p>
+          <p style="font-size:13px;opacity:.75;margin-top:10px">등급이 높을수록 소환할 때 자원(⚡)이 많이 들지만 성능은 확실해요! ⭐ 표시는 오늘의 픽업 캐릭터예요. 행운 버프가 있으면 에픽·전설 확률이 2배가 돼요.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 편성 ===================== -->
+  <section id="screen-deck" class="screen menu-bg">
+    <div class="topbar">
+      <button class="icon-btn" data-go="menu">←</button>
+      <h2>편성</h2>
+      <div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div>
+    </div>
+    <div class="content">
+      <div class="panel" style="margin-bottom:16px">
+        <div class="preset-row" id="preset-tabs"></div>
+        <div class="slots" id="deck-slots"></div>
+        <p class="hint-keys" style="opacity:.75">슬롯을 누르면 빠지고, 아래 몬스터를 누르면 들어가요. 넣은 순서대로 전투의 1~6번 카드가 돼요. 지금 고른 편성이 전투에 나가요.</p>
+      </div>
+      <div class="panel">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+          <h3 class="jua" style="font-size:22px">보유 몬스터</h3>
+          <div class="filter-row" id="deck-filter"></div>
+        </div>
+        <div class="unit-grid" id="deck-pool"></div>
       </div>
     </div>
   </section>
@@ -80,8 +114,8 @@
     </div>
     <div class="content">
       <div class="shop-wrap">
-        <div class="panel shop-section"><h3>편성 · 캐릭터 강화</h3><div class="deck-info" id="deck-info"></div><div class="unit-list" id="shop-units"></div></div>
-        <div class="panel shop-section"><h3>기지 · 자원 강화</h3><div class="up-list" id="shop-ups"></div></div>
+        <div class="panel shop-section"><h3>🐾 몬스터 해금 · 강화</h3><div class="deck-info" id="deck-info"></div><div class="unit-list" id="shop-units"></div></div>
+        <div class="panel shop-section"><h3>🏰 기지 · 자원 강화</h3><div class="up-list" id="shop-ups"></div></div>
       </div>
     </div>
   </section>
@@ -90,14 +124,32 @@
   <section id="screen-stats" class="screen menu-bg">
     <div class="topbar">
       <button class="icon-btn" data-go="menu">←</button>
-      <h2>학습 통계</h2>
+      <h2>학습 기록</h2>
       <div class="coin-pill"><span class="coin">C</span><span class="coin-val">0</span></div>
     </div>
     <div class="content">
       <div class="tiles" id="stat-tiles"></div>
-      <div class="two-col">
-        <div class="panel"><h3 class="jua" style="font-size:22px;margin-bottom:6px">🔥 자주 틀리는 단어</h3><div id="stat-freq"></div></div>
-        <div class="panel"><h3 class="jua" style="font-size:22px;margin-bottom:6px">📝 틀린 단어 목록 (최근 순)</h3><div id="stat-wrong"></div></div>
+      <div class="panel" style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <h3 class="jua" style="font-size:24px">📒 오답 노트</h3>
+          <span id="note-info" style="font-size:14px;opacity:.8"></span>
+          <button class="btn pink" id="btn-review" style="margin-left:auto">📝 오답 시험 보기</button>
+        </div>
+        <p style="font-size:13px;opacity:.75;margin:6px 0 10px">틀린 단어는 오답 노트에 들어가요. 시험이나 전투에서 <b>연속 2번</b> 맞히면 오답 노트에서 빠져요. 시험은 영어→뜻, 뜻→영어가 섞여 나와요.</p>
+        <div id="note-list"></div>
+      </div>
+      <div class="panel">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
+          <h3 class="jua" style="font-size:24px">📚 단어별 기록</h3>
+          <div class="filter-row" id="word-filter"></div>
+          <select id="word-sort" class="sel">
+            <option value="w">많이 틀린 순</option>
+            <option value="last">최근 틀린 순</option>
+            <option value="acc">정답률 낮은 순</option>
+            <option value="abc">알파벳 순</option>
+          </select>
+        </div>
+        <div id="word-table"></div>
       </div>
       <div style="text-align:right;margin-top:14px"><button class="btn red small" id="btn-reset-stats">통계 초기화</button></div>
     </div>
@@ -175,6 +227,7 @@
         <button id="eup">자원 생산 Lv.1<br><span id="eup-cost">⚡250</span></button>
       </div>
       <div class="cards" id="cards"></div>
+      <button id="cannon" title="단어 대포 (C)"><span class="cn-ring"></span><span class="cn-in">💥<b>단어 대포</b><small id="cn-pct">0%</small></span></button>
     </div>
   </section>
 
@@ -219,12 +272,43 @@
     </div>
   </div>
 
+  <!-- ===================== 행운의 단어 ===================== -->
+  <div class="modal" id="modal-luck" style="z-index:65">
+    <div class="modal-box">
+      <div class="quiz-head"><div class="t" style="font-size:22px">✨ 행운의 단어<small>맞히면 이번 뽑기의 에픽·전설 확률이 2배!</small></div>
+        <button class="btn small white quiz-close" id="lk-skip">그냥 뽑기 ⏩</button></div>
+      <div class="quiz-word" style="background:linear-gradient(#ffb703,#ff7aa8)"><span class="pos">LUCKY WORD</span><div class="w" id="lk-word">LUCK</div><div class="q" id="lk-q">다음 중 올바른 뜻은?</div></div>
+      <div class="opts" id="lk-opts"></div>
+      <div class="quiz-fb" id="lk-fb"></div>
+    </div>
+  </div>
+
   <!-- ===================== 뽑기 연출 ===================== -->
   <div class="modal" id="modal-gacha">
     <canvas id="gacha-cv"></canvas>
     <div id="gacha-skip">화면을 누르면 건너뛰어요</div>
     <div id="gacha-result"></div>
   </div>
+
+  <!-- ===================== 오답 시험 ===================== -->
+  <div class="modal" id="modal-review">
+    <div class="modal-box">
+      <div class="quiz-head">
+        <div class="t" style="font-size:22px">📝 오답 시험<small id="rv-progress">1 / 10</small></div>
+        <button class="icon-btn quiz-close" id="rv-close" title="그만하기 (Esc)">✕</button>
+      </div>
+      <div class="rv-bar"><i id="rv-bar"></i></div>
+      <div id="rv-body"></div>
+    </div>
+  </div>
+
+  <nav id="navbar">
+    <button data-go="shop"><span class="ni">🛒</span><span>강화</span></button>
+    <button data-go="deck"><span class="ni">🐾</span><span>편성</span></button>
+    <button data-go="menu" class="home"><span class="ni">⚔️</span><span>전투</span></button>
+    <button data-go="gacha"><span class="ni">🎁</span><span>뽑기</span><span class="dot" id="gacha-dot" style="display:none">0</span></button>
+    <button data-go="stats"><span class="ni">📖</span><span>학습</span></button>
+  </nav>
 
   <div id="toasts"></div>
 </div>
