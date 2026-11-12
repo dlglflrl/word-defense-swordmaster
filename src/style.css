@@ -67,6 +67,16 @@ button{font-family:'Jua','Noto Sans KR',sans-serif;cursor:pointer;border:none;co
 .stage-card h3{font-family:'Jua';font-size:24px;margin:6px 0 2px}
 .stage-card p{font-size:13px;opacity:.8;min-height:36px}
 .stage-card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-family:'Jua';font-size:16px}
+.tr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.tr-stage{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:8px 10px}
+.tr-stage>b{font-family:'Jua';font-size:15px}
+.tr-row,.treasure-res{display:flex;gap:8px;justify-content:center;margin-top:6px}
+.treasure-res{margin:8px 0 4px}
+.tr-slot{position:relative;flex:1;text-align:center;background:#eee;border:2px dashed #bbb;border-radius:12px;padding:6px 2px;min-width:0}
+.tr-slot.got{background:#fff6d6;border:2px solid #e0a800}
+.tr-slot .tr-ic{font-size:30px;line-height:1.2}
+.tr-slot small{display:block;font-size:11px;font-weight:700;line-height:1.2}
+.tr-slot em{position:absolute;top:-8px;right:-4px;background:#ff4d6d;color:#fff;font-style:normal;font-size:11px;font-weight:900;padding:1px 6px;border-radius:999px;font-family:'Jua'}
 .stage-card.locked{cursor:not-allowed;filter:grayscale(1) brightness(.75)}
 .stage-card.locked:hover{transform:none}
 .stage-card .lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px;background:rgba(0,0,0,.25);color:#fff;font-family:'Jua'}
@@ -344,6 +354,11 @@ textarea{width:100%;height:150px;border:3px solid var(--ink);border-radius:14px;
 .utile.in{outline:4px solid #5ed38a;outline-offset:-2px}
 .utile.in::after{content:"✔";position:absolute;top:4px;right:8px;font-family:'Jua';font-size:18px;color:#1fa557}
 .utile.locked{filter:grayscale(1);opacity:.55;cursor:default}
+.tier-pick{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+.tier-pick button{font-family:'Jua';font-size:16px;border:3px solid var(--ink);border-radius:14px;padding:8px 4px;background:#fff;line-height:1.2;cursor:pointer}
+.tier-pick button small{display:block;font-family:inherit;font-size:12px;opacity:.75}
+.tier-pick button.on{color:#fff;box-shadow:0 3px 0 var(--ink);transform:translateY(-2px)}
+@media(max-width:600px){.tier-pick{grid-template-columns:repeat(3,1fr)}}
 .filter-row{display:flex;gap:6px;flex-wrap:wrap}
 .filter-row button{font-family:'Jua';font-size:14px;border:2px solid var(--ink);border-radius:999px;padding:2px 12px;background:#fff}
 .filter-row button.on{background:var(--ink);color:#fff}

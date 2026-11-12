@@ -106,10 +106,36 @@ const STAGES = [
   { id:8, name:'외계 침공',   desc:'보호막을 두른 외계 꼬마들과 함대장이 내려와요!', theme:7, baseHp:12000, reward:800,
     spawns:[ {t:'alien', every:6, start:3}, {t:'metalslime', every:10, start:8}, {t:'ghost', every:8, start:10}, {t:'boar', every:12, start:15} ], hpMul:1.5,
     boss:{ t:'ufo', at:45, hpTrigger:0.65 } },
+  { id:9, name:'불꽃 화산',   desc:'뜨거운 용암 지대! 튼튼한 적과 빠른 적이 동시에 몰려와요.', theme:8, baseHp:14000, reward:1000,
+    spawns:[ {t:'boar', every:7, start:3}, {t:'skeleton', every:9, start:6}, {t:'zombie', every:8, start:8}, {t:'wolf', every:8, start:10}, {t:'bat', every:6, start:5} ], hpMul:1.6 },
+  { id:10, name:'황금 왕좌',  desc:'모든 군단이 모인 마지막 시험! 고철 대왕이 다시 깨어납니다…!', theme:9, baseHp:16000, reward:1500,
+    spawns:[ {t:'alien', every:7, start:3}, {t:'boar', every:8, start:5}, {t:'ghost', every:7, start:8}, {t:'metalslime', every:11, start:10}, {t:'skeleton', every:10, start:12}, {t:'wolf', every:9, start:6} ], hpMul:1.7,
+    boss:{ t:'boss', at:45, hpTrigger:0.65 } },
 ];
+/* 보물: 스테이지마다 3개, 클리어할 때마다 각각 독립적으로 10% 확률로 획득 */
+const TREASURE_RATE = 0.10;
+const TREASURES = {
+  1:[{icon:'🍀',name:'네잎클로버'},{icon:'🌼',name:'햇살 꽃다발'},{icon:'🥚',name:'슬라임 알'}],
+  2:[{icon:'🔮',name:'동굴 수정구'},{icon:'🦇',name:'박쥐 날개 브로치'},{icon:'🕯️',name:'꺼지지 않는 촛불'}],
+  3:[{icon:'🍄',name:'달빛 버섯'},{icon:'🪵',name:'숲의 지팡이'},{icon:'🗝️',name:'이끼 낀 열쇠'}],
+  4:[{icon:'🏺',name:'계곡의 항아리'},{icon:'🧭',name:'혼돈의 나침반'},{icon:'🪶',name:'매의 깃털'}],
+  5:[{icon:'👑',name:'그림자 왕관'},{icon:'🗡️',name:'어둠의 단검'},{icon:'🕸️',name:'달빛 거미줄'}],
+  6:[{icon:'💀',name:'수정 해골'},{icon:'⚰️',name:'작은 관'},{icon:'🕰️',name:'멈춘 회중시계'}],
+  7:[{icon:'💎',name:'강철 원석'},{icon:'⛏️',name:'전설의 곡괭이'},{icon:'🔩',name:'황금 볼트'}],
+  8:[{icon:'🛸',name:'미니 UFO'},{icon:'🌠',name:'별똥별 조각'},{icon:'👽',name:'외계 인형'}],
+  9:[{icon:'🌋',name:'화산석 구슬'},{icon:'🔥',name:'꺼지지 않는 불씨'},{icon:'🐉',name:'용의 비늘'}],
+  10:[{icon:'🏆',name:'황금 트로피'},{icon:'📜',name:'고대 왕의 문서'},{icon:'💍',name:'영원의 반지'}],
+};
+const TREASURE_IDS = Object.entries(TREASURES).flatMap(([sid,a])=>a.map((t,i)=>`${sid}-${i+1}`));
+const stageTreasureCount = (D,sid)=>(TREASURES[sid]||[]).filter((t,k)=>D.treasures[sid+'-'+(k+1)]).length;
+// 이전 스테이지 보물 3개를 모두 모아야 다음 스테이지가 열림 (테스트 버전은 전부 열림)
+const stageUnlocked = i=>DEV_MODE || i===0 || stageTreasureCount(Save.data, STAGES[i-1].id)>=3;
+const treasureInfo = id=>{ const [a,b]=id.split('-'); return TREASURES[a][b-1]; };
 const ACHIEVEMENTS = [
   { id:'first_win',  icon:'🎉', name:'첫 승리',       desc:'스테이지를 처음으로 클리어', reward:50,  check:s=>s.totals.wins>=1 },
   { id:'all_clear',  icon:'👑', name:'그림자 정복자', desc:'Stage 5 보스를 물리치기',    reward:300, check:s=>s.cleared>=5 },
+  { id:'treasure1',  icon:'💎', name:'보물 사냥꾼', desc:'보물을 처음으로 발견', reward:100, check:s=>Object.keys(s.treasures).length>=1 },
+  { id:'treasure_all', icon:'🏴‍☠️', name:'전설의 보물왕', desc:'보물 30개 모두 모으기', reward:1000, check:s=>TREASURE_IDS.every(id=>s.treasures[id]) },
   { id:'space_clear', icon:'🛸', name:'지구 수호자', desc:'Stage 8 외계 함대장을 물리치기', reward:500, check:s=>s.cleared>=8 },
   { id:'combo5',     icon:'🔥', name:'불타는 콤보',   desc:'5연속 정답 달성',            reward:40,  check:s=>s.totals.maxCombo>=5 },
   { id:'combo15',    icon:'⚡', name:'단어 폭주기관차', desc:'15연속 정답 달성',         reward:150, check:s=>s.totals.maxCombo>=15 },
@@ -136,7 +162,7 @@ const Save = {
       up:{ energy:0, start:0, base:0 },
       stats:{ total:0, correct:0, wrong:0, words:{} },
       ach:{}, totals:{ kills:0, wins:0, maxCombo:0, dragons:0, summons:0, pulls:0 },
-      stageBest:{},
+      stageBest:{}, treasures:{}, tier:1, tierOnly:false,
       settings:{ sound:true, quizPause:true, potato:false },
       customWords:null,
       ...(DEV_MODE ? { coins:99999, tickets:100, cleared:STAGES.length } : {}),
@@ -238,12 +264,16 @@ const Sound = {
 };
 
 /* ---------------- QUIZ ---------------- */
+const TIERS = [null,
+  {id:1,name:'브론즈',icon:'🥉',color:'#c98a4b'},{id:2,name:'실버',icon:'🥈',color:'#9aa7b5'},{id:3,name:'골드',icon:'🥇',color:'#e0a800'},
+  {id:4,name:'플래티넘',icon:'💠',color:'#2bb6c9'},{id:5,name:'마스터',icon:'👑',color:'#8e45e8'}];
 const POS_KO = { v:'동사', n:'명사', adj:'형용사', adv:'부사' };
 const Quiz = {
   list:[], recent:[], pending:null,
   init(){
     const cw = Save.data.customWords;
-    this.list = (Array.isArray(cw) && cw.length>=4) ? cw : WORD_DATA.slice();
+    const t=Save.data.tier||1, only=!!Save.data.tierOnly;
+    this.list = (Array.isArray(cw) && cw.length>=4) ? cw : WORD_DATA.filter(w=>only ? w.tier===t : w.tier<=t);   // 기본: 선택 티어 + 아래 티어 누적
     this.recent=[]; this.pending=null;
   },
   parse(text){
@@ -1398,6 +1428,116 @@ const DB = {
   },
 };
 
+/* ---- 2차 디자인: 과장된 비율 · 각진 실루엣 · 표정 ---- */
+Object.assign(D,{
+  brow(c,x,y,ang,len=6,lw=2.6){ D.line(c,[[x-Math.cos(ang)*len/2,y-Math.sin(ang)*len/2],[x+Math.cos(ang)*len/2,y+Math.sin(ang)*len/2]],lw); },
+  stick(c,pts,w=6,fill=WH){ // 굵은 막대 다리/팔 (외곽선 + 흰 속)
+    c.beginPath(); pts.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y)); c.lineCap='round'; c.lineJoin='round';
+    c.lineWidth=w+D.lw*2; c.strokeStyle=LN; c.stroke(); c.lineWidth=w; c.strokeStyle=fill; c.stroke(); },
+  slit(c,x,y,len=4.5){ D.line(c,[[x-len/2,y],[x+len/2,y]],2.6); },
+});
+Object.assign(DD,{
+  // 말랑 슬라임: 젤리 몸 + 가느다란 긴 다리로 성큼성큼
+  slime(c,u,T){ const a=D.ph(u)*6.283, walk=u.state==='walk', st=walk?Math.sin(a)*7:0, p=D.pow(u);
+    const lift=walk?Math.abs(Math.cos(a))*2:0;
+    c.save(); c.translate(Art.lunge(u,16),-lift);
+    D.stick(c,[[-6,-20],[-8+st,-10],[-6+st*1.4,0]],2.6); D.stick(c,[[6,-20],[8-st,-10],[6-st*1.4,0]],2.6);
+    c.save(); c.translate(0,-20); c.scale(1+p*0.15,1-p*0.15);
+    c.beginPath(); c.moveTo(-17,0); c.bezierCurveTo(-19,-24,-6,-30,3,-30); c.bezierCurveTo(13,-30,19,-21,17,0); c.quadraticCurveTo(0,4,-17,0); D.p(c);
+    D.line(c,[[2,-30],[0,-37]],2.2); D.ell(c,4,-38,4.5,2.4,'#9be07a',2,-0.4);
+    D.slit(c,5,-15,5); D.slit(c,13,-15,5); D.brow(c,5,-20,0.25,5,2); D.brow(c,13,-20,-0.1,5,2);
+    D.mouth(c,9,-8,p>0.2?'o':'line');
+    c.restore(); c.restore(); },
+  // 곰돌이 기사: 꼿꼿한 긴 다리 + 각진 몸통 + 몸보다 큰 대검
+  knight(c,u,T){ const a=D.ph(u)*6.283, walk=u.state==='walk', st=walk?Math.sin(a)*6:0, sw=D.swing(u,0.55,1.6,1.8);
+    c.save(); c.translate(Art.lunge(u,12),-(walk?Math.abs(Math.cos(a))*2:0));
+    D.stick(c,[[-5,-30],[-5+st,0]],4); D.stick(c,[[5,-30],[5-st,0]],4);
+    D.line(c,[[-9+st,0],[-1+st,0]],3); D.line(c,[[1-st,0],[9-st,0]],3);
+    c.beginPath(); c.moveTo(-10,-30); c.lineTo(-13,-54); c.lineTo(13,-54); c.lineTo(10,-30); c.closePath(); D.p(c);
+    D.line(c,[[-12,-46],[12,-46]],2);
+    c.beginPath(); c.moveTo(-12,-54); c.lineTo(-13,-72); c.lineTo(15,-72); c.lineTo(14,-54); c.closePath(); D.p(c);
+    D.ell(c,-10,-74,4.5,4.5); D.ell(c,12,-74,4.5,4.5);
+    D.brow(c,3,-67,0.35,6); D.brow(c,10,-67,-0.35,6); D.slit(c,3,-63,4); D.slit(c,10,-63,4);
+    D.ell(c,7,-58,2.2,1.6,LN,1); D.line(c,[[4,-56],[10,-56]],2);
+    c.save(); c.translate(16,-38); c.rotate(sw); D.rr(c,-2.5,-2,5,11,2,'#9a9a9a',2); D.rr(c,-9,-6,18,4,2,WH,2);
+    c.beginPath(); c.moveTo(-5,-6); c.lineTo(-5,-52); c.lineTo(0,-60); c.lineTo(5,-52); c.lineTo(5,-6); c.closePath(); D.p(c,'#eef1f5',2.4); D.line(c,[[0,-10],[0,-50]],1.4); c.restore();
+    D.hand(c,16,-38,4.2);
+    c.restore(); },
+  // 토끼 궁수: 아주 긴 귀, 마른 몸, 구부린 다리로 조준, 한쪽 눈 찡긋
+  archer(c,u,T){ const a=D.ph(u)*6.283, walk=u.state==='walk', st=walk?Math.sin(a)*5:0;
+    const pull=u.atkP>0?(u.atkP<0.5?u.atkP/0.5:Math.max(0,1-(u.atkP-0.5)*6)):0;
+    c.save(); c.translate(0,-(walk?Math.abs(Math.cos(a))*2:0));
+    D.stick(c,[[-4,-26],[-10+st,-14],[-4+st,0]],3.2); D.stick(c,[[4,-26],[10-st,-14],[5-st,0]],3.2);
+    c.beginPath(); c.moveTo(-7,-26); c.lineTo(-6,-46); c.lineTo(6,-46); c.lineTo(8,-26); c.closePath(); D.p(c);
+    c.save(); c.translate(-2,-58); c.rotate(-0.25+Math.sin(T*2+u.seed)*0.06); c.beginPath(); c.moveTo(-3,0); c.lineTo(-4,-34); c.quadraticCurveTo(0,-40,3,-34); c.lineTo(4,0); D.p(c); c.restore();
+    c.save(); c.translate(5,-58); c.rotate(0.15+Math.sin(T*2+u.seed+1)*0.06); c.beginPath(); c.moveTo(-3,0); c.lineTo(-3,-28); c.quadraticCurveTo(1,-34,4,-28); c.lineTo(4,0); D.p(c); c.restore();
+    D.ell(c,2,-55,12,10);
+    D.slit(c,4,-56,4); D.dot(c,11,-56); D.brow(c,4,-60,0.3,5,2); D.mouth(c,9,-50,'s');
+    c.save(); c.translate(17,-38);
+    c.beginPath(); c.arc(0,0,22,-1.3,1.3); c.lineWidth=6; c.strokeStyle=LN; c.stroke(); c.lineWidth=3; c.strokeStyle='#d9a066'; c.stroke();
+    D.line(c,[[Math.cos(-1.3)*22,Math.sin(-1.3)*22],[-pull*12,0],[Math.cos(1.3)*22,Math.sin(1.3)*22]],1.4);
+    if(pull>0.05){ D.line(c,[[-pull*12,0],[24,0]],2.2); c.beginPath(); c.moveTo(24,-3.5); c.lineTo(31,0); c.lineTo(24,3.5); c.closePath(); D.p(c,WH,1.8); }
+    c.restore(); D.hand(c,17-pull*12,-38);
+    c.restore(); },
+  // 코뿔소 수호대: 거대한 팔이 땅에 닿는 덩치, 짧은 다리, 두꺼운 눈썹
+  golem(c,u,T){ const a=D.ph(u)*6.283, walk=u.state==='walk', st=walk?Math.sin(a)*4:0, p=D.pow(u);
+    c.save(); c.translate(Art.lunge(u,10),-(walk?Math.abs(Math.cos(a))*1.5:0));
+    D.rr(c,-14+st,-14,10,15,3); D.rr(c,4-st,-14,10,15,3);
+    c.save(); c.translate(-22,-44); c.rotate(0.15-st*0.02); D.rr(c,-7,0,14,30,7); D.ell(c,0,34,10,8); c.restore();
+    c.beginPath(); c.moveTo(-24,-12); c.lineTo(-30,-58); c.quadraticCurveTo(-20,-74,0,-74); c.quadraticCurveTo(22,-74,28,-58); c.lineTo(24,-12); c.closePath(); D.p(c);
+    c.beginPath(); c.moveTo(14,-66); c.lineTo(22,-88); c.lineTo(26,-64); D.p(c);
+    D.brow(c,2,-60,0.3,9,3.4); D.brow(c,15,-60,-0.3,9,3.4); D.dot(c,3,-55,1.8,2.2); D.dot(c,14,-55,1.8,2.2);
+    D.mouth(c,9,-44,'frown'); D.line(c,[[-16,-36],[-8,-34]],1.8);
+    c.save(); c.translate(24,-46); c.rotate(-0.15-p*1.4); D.rr(c,-7,0,14,30,7); D.ell(c,0,34,11,9); c.restore();
+    c.restore(); },
+  // 개구리 사냥꾼: 납작하고 넓은 몸 + 툭 튀어나온 눈 + 쭈그린 긴 뒷다리
+  frog(c,u,T){ const tg=D.pow(u), walk=u.state==='walk', a=D.ph(u)*6.283, hop=walk?Math.max(0,Math.sin(a))*12:0, ext=walk?Math.max(0,Math.sin(a)):0;
+    c.save(); c.translate(0,-hop);
+    D.stick(c,[[-12,-10],[-24-ext*6,-14+ext*6],[-18-ext*10,0+ext*2]],3.5);
+    c.beginPath(); c.moveTo(-20,-6); c.quadraticCurveTo(-24,-26,0,-26); c.quadraticCurveTo(26,-26,24,-8); c.quadraticCurveTo(0,0,-20,-6); D.p(c);
+    D.ell(c,0,-30,6.5,8); D.ell(c,14,-30,6.5,8); D.slit(c,1,-31,5); D.slit(c,15,-31,5);
+    D.line(c,[[4,-14],[24,-15]],2);
+    D.stick(c,[[12,-8],[16,0]],3);
+    if(tg>0.05){ D.line(c,[[23,-15],[23+tg*48,-15]],5); c.beginPath(); c.moveTo(23,-15); c.lineTo(23+tg*48,-15); c.lineWidth=2.6; c.strokeStyle='#ff8fa8'; c.stroke(); D.ell(c,23+tg*48,-15,4.5,4.5,'#ff8fa8',2); }
+    c.beginPath(); c.moveTo(-6,-37); c.lineTo(22,-37); c.lineTo(17,-46); c.lineTo(-1,-46); c.closePath(); D.p(c,WH,2.2); D.line(c,[[-10,-37],[26,-37]],2.8);
+    c.restore(); },
+  // 늑대 닌자: 길쭉한 주둥이, 가느다란 몸, 낮게 웅크린 자세
+  fox(c,u,T){ const a=D.ph(u)*6.283, walk=u.state==='walk', st=walk?Math.sin(a)*8:0, sw=D.swing(u,-0.3,1.4,3.2)+0.2, wv=Math.sin(T*8)*3;
+    c.save(); c.translate(Art.lunge(u,26),-(walk?Math.abs(Math.cos(a))*2:0)); c.rotate(walk?0.25:0.1);
+    D.stick(c,[[-4,-22],[-12+st,-12],[-4+st,0]],3); D.stick(c,[[4,-22],[12-st,-12],[6-st,0]],3);
+    c.beginPath(); c.moveTo(-4,-40); c.quadraticCurveTo(-24,-44+wv,-38,-36+wv); c.lineTo(-35,-31+wv); c.quadraticCurveTo(-20,-36,-4,-36); D.p(c,'#ff5d7a',2);
+    c.beginPath(); c.moveTo(-8,-22); c.lineTo(-6,-42); c.lineTo(8,-42); c.lineTo(9,-22); c.closePath(); D.p(c);
+    D.line(c,[[-7,-30],[9,-30]],2);
+    c.beginPath(); c.moveTo(-8,-50); c.lineTo(-10,-68); c.lineTo(-1,-56); D.p(c); c.beginPath(); c.moveTo(2,-57); c.lineTo(6,-72); c.lineTo(10,-55); D.p(c);
+    c.beginPath(); c.moveTo(-10,-44); c.quadraticCurveTo(-10,-58,2,-58); c.lineTo(32,-48); c.lineTo(10,-40); c.quadraticCurveTo(-8,-38,-10,-44); D.p(c);
+    D.dot(c,31,-48,1.6,1.6); D.brow(c,6,-53,0.45,7,2.6); D.slit(c,7,-50,4);
+    D.sword(c,10,-32,sw,30,'#e9f6ff'); D.hand(c,10,-32);
+    c.restore(); },
+  // 꼬마 슬라임(적): 송곳니 + 찡그린 눈썹
+  eslime(c,u,T){ const ph=D.ph(u), walk=u.state==='walk'; let sq=walk?Math.sin(ph*6.283)*0.1:0; if(u.atkP>0) sq=-D.pow(u)*0.22;
+    c.save(); c.translate(Art.lunge(u,14),-(walk?Math.abs(Math.sin(ph*6.283))*5:0)); c.scale(1-sq*.5,1+sq);
+    c.beginPath(); c.moveTo(-20,0); c.lineTo(-17,-18); c.quadraticCurveTo(-10,-32,4,-31); c.quadraticCurveTo(18,-30,20,-14); c.lineTo(20,0); c.quadraticCurveTo(0,3,-20,0); D.p(c,'#efe0ff');
+    c.beginPath(); c.moveTo(-6,-30); c.lineTo(-3,-38); c.lineTo(1,-31); D.p(c,'#efe0ff',2.2);
+    D.brow(c,4,-23,0.5,7,2.8); D.brow(c,14,-23,-0.5,7,2.8); D.dot(c,5,-18,1.6,2.2); D.dot(c,13,-18,1.6,2.2);
+    c.beginPath(); c.moveTo(2,-10); c.quadraticCurveTo(9,-6,16,-10); D.p(c,null,2);
+    c.beginPath(); c.moveTo(5,-9); c.lineTo(6,-5); c.lineTo(8,-8.5); D.p(c,WH,1.6); c.beginPath(); c.moveTo(11,-8.5); c.lineTo(12.5,-5); c.lineTo(14,-9); D.p(c,WH,1.6);
+    c.restore(); },
+  // 좀비 전사: 구부정하게 긴 몸, 땅에 끌리는 긴 팔, 벌린 입
+  skeleton(c,u,T){ const a=D.ph(u)*6.283, walk=u.state==='walk', st=walk?Math.sin(a)*6:0, p=D.pow(u);
+    c.save(); c.translate(Art.lunge(u,12),-(walk?Math.abs(Math.cos(a))*1.5:0));
+    D.stick(c,[[-5,-30],[-7+st,-14],[-5+st,0]],4,'#cfe8c5'); D.stick(c,[[5,-30],[7-st,-14],[6-st,0]],4,'#cfe8c5');
+    c.save(); c.rotate(0.2);
+    c.beginPath(); c.moveTo(-10,-28); c.lineTo(-12,-58); c.lineTo(10,-60); c.lineTo(12,-28); c.lineTo(5,-32); c.lineTo(0,-26); c.lineTo(-5,-32); c.closePath(); D.p(c,'#e3dff0');
+    D.ell(c,6,-70,12,11,'#cfe8c5');
+    D.eyes(c,4,4,-72,u,T,'x'); D.dot(c,13,-72,2.4,2.4);
+    c.beginPath(); c.ellipse(10,-62,4,2.6+p*2,0,0,7); D.p(c,LN,1);
+    D.line(c,[[0,-80],[4,-76],[8,-81]],1.8);
+    c.restore();
+    D.stick(c,[[2,-54],[18,-38-p*10],[26+p*10,-20-p*14]],4,'#cfe8c5');
+    D.stick(c,[[-4,-52],[8,-34],[14,-14]],4,'#cfe8c5');
+    c.restore(); },
+});
+
 Object.assign(DRAWERS, DD);
 const Assets = { load(){ return Promise.resolve(); } };
 function setupWalk(){ Object.assign(WALK_W,{ slime:12, knight:10, archer:10, golem:6, mushroom:7, squirrel:12, duck:10, snowmage:9, penguin:9, frog:7, sheep:9, robot:8, fox:14, astronaut:10, turtle:4, bee:16,
@@ -1713,6 +1853,8 @@ const THEMES = [
   { sky:['#0f2a2a','#4f7d6e'], far:'#20403a', near:'#2b5246', ground:'#3d6b55', dirt:'#2a3a30', deco:'tomb',    cloud:'rgba(200,255,220,.18)' },
   { sky:['#3a3540','#8a7f78'], far:'#57504c', near:'#6b625a', ground:'#8a7a66', dirt:'#4e4338', deco:'mine',    cloud:'rgba(220,210,200,.25)' },
   { sky:['#05051a','#2a2a6e'], far:'#1d1d4a', near:'#2a2a5e', ground:'#4a4a7a', dirt:'#24244a', deco:'planet',  cloud:'rgba(180,160,255,.15)' },
+  { sky:['#3a0d08','#e8602a'], far:'#6b1e10', near:'#8c2a14', ground:'#5a3a30', dirt:'#2e1612', deco:'lava',    cloud:'rgba(255,160,90,.2)' },
+  { sky:['#3a2a0a','#f4c64a'], far:'#8a6a1e', near:'#a8832a', ground:'#c9a24a', dirt:'#6e5320', deco:'gold',    cloud:'rgba(255,240,180,.4)' },
 ];
 const POTATO = ()=>Save.data.settings.potato;
 /* 감자 모드용 스프라이트 캐시: 유닛 동작을 몇 장의 그림으로 미리 그려 두고 찍기만 함 */
@@ -1870,6 +2012,8 @@ const Render = {
       else if(th.deco==='rock'){ c.fillStyle='#b8733f'; c.beginPath(); c.moveTo(-30,30); c.lineTo(-20,-20); c.lineTo(10,-34); c.lineTo(30,30); c.fill(); }
       else if(th.deco==='tomb'){ c.fillStyle='#5f7f78'; c.beginPath(); c.roundRect(-14,-24,28,54,[14,14,2,2]); c.fill(); c.fillStyle='#3e5a54'; c.fillRect(-2,-14,4,18); c.fillRect(-8,-8,16,4); }
       else if(th.deco==='mine'){ c.fillStyle='#5a4a3a'; c.fillRect(-26,-30,8,60); c.fillRect(18,-30,8,60); c.fillRect(-30,-36,60,10); c.fillStyle='#c0c6d6'; c.beginPath(); c.moveTo(-6,10); c.lineTo(0,-6); c.lineTo(6,10); c.fill(); }
+      else if(th.deco==='lava'){ c.fillStyle='#2a1612'; c.beginPath(); c.moveTo(-34,30); c.lineTo(-10,-34); c.lineTo(10,-34); c.lineTo(34,30); c.fill(); c.fillStyle='#ff7a2a'; c.beginPath(); c.moveTo(-6,-34); c.lineTo(0,-6); c.lineTo(6,-34); c.fill(); }
+      else if(th.deco==='gold'){ c.fillStyle='#e8b923'; c.beginPath(); c.moveTo(-18,30); c.lineTo(-18,-20); c.lineTo(-9,-8); c.lineTo(0,-30); c.lineTo(9,-8); c.lineTo(18,-20); c.lineTo(18,30); c.fill(); c.fillStyle='rgba(255,255,255,.35)'; c.fillRect(-12,-4,5,30); }
       else if(th.deco==='planet'){ c.fillStyle='rgba(199,125,255,.35)'; c.beginPath(); c.arc(0,-230,22,0,7); c.fill(); c.strokeStyle='rgba(255,210,63,.4)'; c.lineWidth=3; c.beginPath(); c.ellipse(0,-230,34,8,-0.3,0,7); c.stroke(); }
       else { c.fillStyle='#2a1020'; c.beginPath(); c.moveTo(-14,30); c.lineTo(-4,-50); c.lineTo(4,-20); c.lineTo(10,-60); c.lineTo(16,30); c.fill(); }
       c.restore();
@@ -2015,6 +2159,12 @@ const UI = {
       const b=document.createElement('button'); b.className='chip-btn'; b.style.background='#ff8f8f'; b.textContent='🧪 테스트 재화 충전 (코인 +99,999 · 뽑기권 +100)';
       b.onclick=()=>{ Save.data.coins+=99999; Save.data.tickets+=100; Save.data.cleared=STAGES.length; Save.save(); this.refreshCoins(); this.toast('🧪','재화를 충전했어요!'); };
       $('.lobby-quick').appendChild(b);
+      // 🧪 스테이지 자동 클리어: 전투 중 버튼 → 즉시 승리 처리 (코인·뽑기권·별·보물 드랍은 정상 지급)
+      const ab=document.createElement('button'); ab.id='dev-autoclear'; ab.className='btn pink small';
+      ab.style.cssText='position:absolute;left:50%;top:92px;transform:translateX(-50%);z-index:30';
+      ab.textContent='🧪 자동 클리어';
+      ab.onclick=()=>{ if(Battle.running && !Battle.over) Battle.finish(true); };
+      $('#screen-battle').appendChild(ab);
     }
     $('#p-resume').onclick=()=>this.pause(false);
     $('#p-restart').onclick=()=>{ this.pause(false); this.startStage(Battle.si); };
@@ -2096,7 +2246,7 @@ const UI = {
     $('#trait-guide').querySelector('[data-go2]').onclick=()=>this.go('deck');
     const g=$('#stage-grid'); g.innerHTML='';
     STAGES.forEach((st,i)=>{
-      const locked = i>Save.data.cleared, cleared=i<Save.data.cleared, best=Save.data.stageBest[st.id]||0;
+      const locked = !stageUnlocked(i), cleared=i<Save.data.cleared, best=Save.data.stageBest[st.id]||0;
       const d=document.createElement('div'); d.className='stage-card'+(locked?' locked':'');
       const cv=document.createElement('canvas'); cv.width=440; cv.height=240;
       Render.prepareBg(st.theme, cv);
@@ -2107,10 +2257,16 @@ const UI = {
       c.restore();
       d.appendChild(cv);
       d.insertAdjacentHTML('beforeend',`<div class="info"><span class="num">STAGE ${st.id}</span><h3>${st.name}</h3><p>${st.desc}</p><div style="font-size:13px;font-weight:700;margin-top:2px">${[...new Set(ens.flatMap(k=>ENEMIES[k].traits||[]))].map(t=>`<span title="${TRAITS[t].desc}" style="background:${TRAITS[t].color}33;border:1.5px solid ${TRAITS[t].color};border-radius:8px;padding:0 6px;margin-right:4px">${TRAITS[t].icon} ${TRAITS[t].name}</span>`).join('')||'<span style="opacity:.5">특성 없음</span>'}</div>
-        <div class="meta"><span><span class="coin" style="width:22px;height:22px;font-size:11px">C</span> ${cleared?Math.round(st.reward/2):st.reward} · 🎟️${cleared?1:3}</span>
+        <div class="meta"><span><span class="coin" style="width:22px;height:22px;font-size:11px">C</span> ${cleared?Math.round(st.reward/2):st.reward} · 🎟️${cleared?1:3} · 💎${TREASURES[st.id].filter((t,k)=>Save.data.treasures[st.id+'-'+(k+1)]).length}/3</span>
         ${cleared?`<span class="badge-clear">${'★'.repeat(best)}${'☆'.repeat(3-best)} CLEAR</span>`:''}</div></div>`);
-      if(locked) d.insertAdjacentHTML('beforeend','<div class="lock">🔒</div>');
-      d.onclick=()=>{ if(locked){ Sound.play('wrong'); this.toast('🔒','이전 스테이지를 먼저 클리어하세요!'); return; } Sound.init(); Sound.play('open'); this.startStage(i); };
+      if(locked) d.insertAdjacentHTML('beforeend',`<div class="lock" style="flex-direction:column;font-size:15px;text-align:center;padding:0 10px"><span style="font-size:46px">🔒</span>STAGE ${st.id-1} 보물<br>3개를 모두 모아야 열려요 (${stageTreasureCount(Save.data,STAGES[i-1].id)}/3)</div>`);
+      if(DEV_MODE && !locked){
+        const ab=document.createElement('button'); ab.className='btn pink small'; ab.textContent='🧪 자동 클리어';
+        ab.style.cssText='position:absolute;right:8px;top:8px;z-index:5';
+        ab.onclick=e=>{ e.stopPropagation(); Sound.init(); this.startStage(i); Battle.finish(true); };
+        d.appendChild(ab);
+      }
+      d.onclick=()=>{ if(locked){ Sound.play('wrong'); this.toast('🔒',`STAGE ${STAGES[i-1].id} 의 보물 3개를 모두 모아야 해요!`); return; } Sound.init(); Sound.play('open'); this.startStage(i); };
       g.appendChild(d);
     });
   },
@@ -2240,7 +2396,7 @@ const UI = {
   showResult(){
     const B=Battle, s=B.ses, st=B.stage, D=Save.data, win=B.win;
     $('#modal-quiz').classList.remove('show'); B.quizOpen=false;
-    let stageCoins=0, stars=0, firstClear=false, tickets=0;
+    let stageCoins=0, stars=0, firstClear=false, tickets=0, drops=[];
     if(win){
       firstClear = D.cleared < st.id;
       stageCoins = firstClear ? st.reward : Math.round(st.reward/2);
@@ -2249,6 +2405,8 @@ const UI = {
       D.stageBest[st.id]=Math.max(D.stageBest[st.id]||0,stars);
       D.totals.wins++;
       tickets = (firstClear?3:1) + (stars===3?1:0); D.tickets += tickets;
+      // 보물 3개: 각각 독립적으로 10% 확률
+      (TREASURES[st.id]||[]).forEach((t,i)=>{ if(Math.random()<TREASURE_RATE){ const id=`${st.id}-${i+1}`; const isNew=!D.treasures[id]; D.treasures[id]=(D.treasures[id]||0)+1; drops.push({...t,isNew}); } });
     }
     const quizBonus = s.correct*2;          // 단어 정답 → 코인 성장
     const total = stageCoins + s.coins + quizBonus;
@@ -2266,10 +2424,11 @@ const UI = {
       [s.total,'출제 단어'],[s.correct,'정답'],[s.wrong,'오답'],[s.total?acc+'%':'-','정답률'],
     ].map(([v,l],i)=>`<div class="tile" style="background:${['#eef4ff','#e6fbee','#ffecec','#fff6d6'][i]}"><b>${v}</b><small>📘 ${l}</small></div>`).join('');
     const uniq=[...new Map(s.wrongWords.map(w=>[w.en,w])).values()];
-    $('#res-words').innerHTML = (tickets? `<div style="text-align:center;font-family:Jua;font-size:22px;color:#7a4ae0;margin-bottom:8px">🎟️ 뽑기권 +${tickets}장 획득!${stars===3?' (★3 보너스 포함)':''}</div>` : '') + `<h4>📝 이번 전투에서 틀린 단어 (최고 콤보 ${s.maxCombo})</h4>` + (uniq.length? uniq.map(w=>`<span class="chip">${w.en} <i>${w.ko}</i></span>`).join('') : '<div class="empty">틀린 단어가 없어요! 완벽해요 🎉</div>');
+    const tBox = win ? `<div class="treasure-res">${(TREASURES[st.id]||[]).map((t,i)=>{ const got=drops.find(d=>d.name===t.name); return `<div class="tr-slot ${got?'got':''}"><div class="tr-ic">${got?t.icon:'❔'}</div><small>${got?t.name:'???'}</small>${got?`<em>${got.isNew?'NEW!':'+1'}</em>`:''}</div>`; }).join('')}</div><div style="text-align:center;font-size:13px;opacity:.75;margin-bottom:8px">💎 ${drops.length?`보물 ${drops.length}개 발견!`:'이번엔 보물이 나오지 않았어요'} (보물마다 ${Math.round(TREASURE_RATE*100)}% 확률)</div>` : '';
+    $('#res-words').innerHTML = tBox + (tickets? `<div style="text-align:center;font-family:Jua;font-size:22px;color:#7a4ae0;margin-bottom:8px">🎟️ 뽑기권 +${tickets}장 획득!${stars===3?' (★3 보너스 포함)':''}</div>` : '') + `<h4>📝 이번 전투에서 틀린 단어 (최고 콤보 ${s.maxCombo})</h4>` + (uniq.length? uniq.map(w=>`<span class="chip">${w.en} <i>${w.ko}</i></span>`).join('') : '<div class="empty">틀린 단어가 없어요! 완벽해요 🎉</div>');
     const act=$('#res-actions'); act.innerHTML='';
     const mk=(txt,cls,fn)=>{ const b=document.createElement('button'); b.className='btn '+cls; b.textContent=txt; b.onclick=()=>{ Sound.play('click'); fn(); }; act.appendChild(b); };
-    if(win && B.si<STAGES.length-1) mk('다음 스테이지 ▶','pink',()=>this.startStage(B.si+1));
+    if(win && B.si<STAGES.length-1 && stageUnlocked(B.si+1)) mk('다음 스테이지 ▶','pink',()=>this.startStage(B.si+1));
     if(D.tickets>0) mk(`🎁 뽑기 하러 가기 (🎟️${D.tickets})`,'purple',()=>{ $('#modal-result').classList.remove('show'); this.go('gacha'); });
     mk('↻ 다시 하기','',()=>this.startStage(B.si));
     mk('🛒 강화하러 가기','green',()=>{ $('#modal-result').classList.remove('show'); this.go('shop'); });
@@ -2278,8 +2437,10 @@ const UI = {
     if(win && firstClear){
       const nu = UNIT_ORDER.find(k=>UNITS[k].unlock && UNITS[k].unlock.stage===st.id && !D.units[k].owned);
       if(nu) setTimeout(()=>this.toast('🔓',`${UNITS[nu].name} 해금 가능! 상점에서 확인하세요`),600);
-      if(st.id<STAGES.length) setTimeout(()=>this.toast('🗺️',`STAGE ${st.id+1} 이 열렸어요!`),300);
+      
     }
+    if(win && st.id<STAGES.length && stageTreasureCount(D,st.id)>=3 && drops.length) setTimeout(()=>this.toast('🗺️',`보물 3개 완성! STAGE ${st.id+1} 이 열렸어요!`),300);
+    else if(win && st.id<STAGES.length && stageTreasureCount(D,st.id)<3) setTimeout(()=>this.toast('💎',`다음 스테이지는 보물 3개를 모두 모아야 열려요 (${stageTreasureCount(D,st.id)}/3)`),300);
     this.checkAch(s);
     this.refreshCoins();
   },
@@ -2346,8 +2507,8 @@ const UI = {
   /* --- 통계 --- */
   /* --- 로비 --- */
   renderLobby(){
-    const D=Save.data, next=Math.min(D.cleared, STAGES.length-1), st=STAGES[next];
-    $('#lobby-stage').innerHTML = D.cleared>=STAGES.length ? `🏆 모든 스테이지 클리어! <b>더 높은 별에 도전해 보세요</b>` : `다음 도전: <b>STAGE ${st.id} · ${st.name}</b>`;
+    const D=Save.data, ni=STAGES.findIndex(x=>stageTreasureCount(D,x.id)<3), next=ni<0?STAGES.length-1:ni, st=STAGES[next];
+    $('#lobby-stage').innerHTML = ni<0 ? `🏆 모든 보물을 모았어요! <b>더 높은 별에 도전해 보세요</b>` : `다음 도전: <b>STAGE ${st.id} · ${st.name}</b> (💎${stageTreasureCount(D,st.id)}/3)`;
     $('#lobby-wrong').textContent = Object.values(D.stats.words).filter(e=>e.nb).length;
     $('#lobby-deck').textContent = D.deckIdx+1;
   },
@@ -2399,7 +2560,21 @@ const UI = {
   },
 
   /* --- 학습 기록 --- */
+  renderTier(){
+    const D=Save.data, cw=Array.isArray(D.customWords)&&D.customWords.length>=4, box=$('#tier-pick'); box.innerHTML='';
+    for(let t=1;t<=5;t++){
+      const n=WORD_DATA.filter(w=>D.tierOnly? w.tier===t : w.tier<=t).length, b=document.createElement('button'), T=TIERS[t];
+      b.className=D.tier===t?'on':''; if(D.tier===t) b.style.background=T.color;
+      b.innerHTML=`${T.icon} ${T.name}<small>${n}개</small>`;
+      b.onclick=()=>{ D.tier=t; Save.save(); Quiz.init(); Sound.play('click'); this.renderStats(); };
+      box.appendChild(b);
+    }
+    const chk=$('#tier-only'); chk.checked=!!D.tierOnly;
+    chk.onchange=()=>{ D.tierOnly=chk.checked; Save.save(); Quiz.init(); this.renderStats(); };
+    $('#tier-info').textContent = cw ? '⚠ 설정에서 사용자 단어를 쓰고 있어서 티어가 적용되지 않아요. (설정 > 기본 단어로 되돌리기)' : `지금 전투·오답 시험·학습 기록에는 ${TIERS[D.tier].name} ${D.tierOnly?'티어 단어만':'티어까지의 단어'} ${Quiz.list.length}개가 나와요.`;
+  },
   renderStats(){
+    this.renderTier();
     const s=Save.data.stats, acc=s.total?Math.round(s.correct/s.total*100):0, W=s.words;
     const note=Object.entries(W).filter(([,e])=>e.nb);
     const cleared=Object.values(W).filter(e=>e.w>0 && !e.nb).length;
@@ -2421,6 +2596,8 @@ const UI = {
   },
   renderAch(){
     const D=Save.data;
+    $('#tr-count').textContent=`${TREASURE_IDS.filter(id=>D.treasures[id]).length} / ${TREASURE_IDS.length}`;
+    $('#tr-grid').innerHTML=STAGES.map(st=>`<div class="tr-stage"><b>STAGE ${st.id} · ${st.name}</b><div class="tr-row">${TREASURES[st.id].map((t,i)=>{ const n=D.treasures[`${st.id}-${i+1}`]||0; return `<div class="tr-slot ${n?'got':''}"><div class="tr-ic">${n?t.icon:'❔'}</div><small>${n?t.name:'???'}</small>${n>1?`<em>x${n}</em>`:''}</div>`; }).join('')}</div></div>`).join('');
     $('#ach-grid').innerHTML=ACHIEVEMENTS.map(a=>`<div class="ach ${D.ach[a.id]?'done':''}"><div class="medal">${a.icon}</div><div><h4>${a.name}</h4><p>${a.desc}</p><div class="rw">${D.ach[a.id]?'✅ 달성!':'보상 '+a.reward+' 코인'}</div></div></div>`).join('');
   },
   renderSettings(){
@@ -2429,7 +2606,7 @@ const UI = {
     $('#tg-potato').classList.toggle('on',POTATO());
     const cw=Save.data.customWords;
     if(cw && !$('#custom-words').value) $('#custom-words').value=cw.map(w=>`${w.en}, ${w.ko}`).join('\n');
-    $('#words-info').textContent = cw? `사용자 단어 ${cw.length}개 사용 중` : `기본 단어 ${WORD_DATA.length}개 사용 중`; $('#words-info').style.color='';
+    $('#words-info').textContent = cw? `사용자 단어 ${cw.length}개 사용 중` : `기본 단어 ${Quiz.list.length}개 사용 중 (${TIERS[Save.data.tier].name} 티어)`; $('#words-info').style.color='';
   },
 };
 
